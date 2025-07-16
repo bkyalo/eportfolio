@@ -93,8 +93,8 @@
     }
     .skills-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
     }
     .skill-category {
         border: 1px solid var(--border-color);
@@ -164,7 +164,7 @@
         }
         
         .skills-grid {
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, 1fr);
         }
         
         .fact-item {
