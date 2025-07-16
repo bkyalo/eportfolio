@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\SiteContactDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -11,70 +12,40 @@ class PortfolioController extends Controller
     public function index()
     {
         // Get the contact details
-        $contact = \App\Models\SiteContactDetail::first();
+        $contact = SiteContactDetail::first();
         
-        $projects = [
-            [
-                'title' => 'E-Commerce Platform',
-                'description' => 'A full-featured e-commerce platform with product management, cart, and payment integration.',
-                'tech_stack' => 'Laravel, Vue.js, Tailwind CSS, MySQL',
-                'image' => 'images/projects/ecommerce.jpg',
-                'category' => 'Web Application',
-                'live_url' => '#',
-                'code_url' => '#',
-                'accent' => 'purple'
-            ],
-            [
-                'title' => 'Task Management App',
-                'description' => 'A collaborative task management application with real-time updates and team features.',
-                'tech_stack' => 'React, Node.js, MongoDB, Socket.io',
-                'image' => 'images/projects/taskapp.jpg',
-                'category' => 'Web Application',
-                'live_url' => '#',
-                'code_url' => '#',
-                'accent' => 'blue'
-            ],
-            [
-                'title' => 'Portfolio Website',
-                'description' => 'A responsive portfolio website built with modern web technologies.',
-                'tech_stack' => 'HTML5, CSS3, JavaScript, Bootstrap 5',
-                'image' => 'images/projects/portfolio.jpg',
-                'category' => 'Website',
-                'live_url' => '#',
-                'code_url' => '#',
-                'accent' => 'green'
-            ],
-            [
-                'title' => 'IoT Home Automation',
-                'description' => 'Smart home automation system with remote control and monitoring capabilities.',
-                'tech_stack' => 'Raspberry Pi, Python, MQTT, React Native',
-                'image' => 'images/projects/iot.jpg',
-                'category' => 'IoT',
-                'live_url' => '#',
-                'code_url' => '#',
-                'accent' => 'orange'
-            ],
-            [
-                'title' => 'Fitness Tracker',
-                'description' => 'Mobile application for tracking workouts, nutrition, and fitness progress.',
-                'tech_stack' => 'React Native, Firebase, Redux',
-                'image' => 'images/projects/fitness.jpg',
-                'category' => 'Mobile App',
-                'live_url' => '#',
-                'code_url' => '#',
-                'accent' => 'red'
-            ],
-            [
-                'title' => 'CMS Platform',
-                'description' => 'Content management system with role-based access control and custom themes.',
-                'tech_stack' => 'Laravel, Livewire, Alpine.js, Tailwind CSS',
-                'image' => 'images/projects/cms.jpg',
-                'category' => 'Web Application',
-                'live_url' => '#',
-                'code_url' => '#',
-                'accent' => 'indigo'
-            ]
-        ];
+        // Get projects from database
+        $projects = Project::where('is_live', true)
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function($project) {
+                return [
+                    'title' => $project->title,
+                    'description' => $project->brief_description,
+                    'tech_stack' => $project->stack,
+                    'image' => $project->image_path ?? 'images/projects/placeholder.jpg',
+                    'category' => 'Web Development', // Default category since it's not in the schema
+                    'live_url' => $project->live_url ?? '#',
+                    'code_url' => $project->github_url ?? '#',
+                    'accent' => 'purple' // Default accent color since it's not in the schema
+                ];
+            })->toArray();
+            
+        // Add fallback projects if no projects found in the database
+        if (empty($projects)) {
+            $projects = [
+                [
+                    'title' => 'Sample Project',
+                    'description' => 'This is a sample project. Add your projects in the admin panel.',
+                    'tech_stack' => 'Laravel, Vue.js, Tailwind CSS',
+                    'image' => 'images/projects/placeholder.jpg',
+                    'category' => 'Web Application',
+                    'live_url' => '#',
+                    'code_url' => '#',
+                    'accent' => 'purple'
+                ]
+            ];
+        }
 
         $skills = [
             [

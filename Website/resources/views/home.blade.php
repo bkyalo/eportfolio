@@ -55,39 +55,18 @@
                 <p>Here are some of my recent projects that showcase my skills and expertise in various technologies.</p>
             </div>
             
-            <div class="projects-grid">
+            <div class="projects-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; padding: 1rem 0;">
                 @foreach($projects as $project)
-                <div class="project-card anim-on-scroll">
-                    <div class="project-img-container">
-                        <img src="{{ asset($project['image']) }}" alt="{{ $project['title'] }}">
-                        <div class="project-overlay">
-                            <div class="project-links">
-                                @if(isset($project['live_url']))
-                                <a href="{{ $project['live_url'] }}" target="_blank" title="View Live">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                                @endif
-                                @if(isset($project['code_url']))
-                                <a href="{{ $project['code_url'] }}" target="_blank" title="View Code">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <span class="project-category">{{ $project['category'] ?? 'Web Development' }}</span>
-                        <h3 class="project-title">{{ $project['title'] }}</h3>
-                        <p class="project-description">{{ $project['description'] }}</p>
-                        @if(isset($project['tech_stack']))
-                        <div class="project-tags">
-                            @foreach(explode(', ', $project['tech_stack']) as $tech)
-                            <span class="project-tag">{{ trim($tech) }}</span>
-                            @endforeach
-                        </div>
-                        @endif
-                    </div>
-                </div>
+                    <x-project-card 
+                        :title="$project['title']"
+                        :description="$project['description']"
+                        :techStack="$project['tech_stack']"
+                        :image="$project['image']"
+                        :liveUrl="$project['live_url']"
+                        :codeUrl="$project['code_url']"
+                        :category="$project['category']"
+                        class="anim-on-scroll"
+                    />
                 @endforeach
             </div>
             
