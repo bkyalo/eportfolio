@@ -101,6 +101,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/{skill}/edit', [App\Http\Controllers\Admin\SkillController::class, 'edit'])->name('edit');
         Route::put('/{skill}', [App\Http\Controllers\Admin\SkillController::class, 'update'])->name('update');
         Route::delete('/{skill}', [App\Http\Controllers\Admin\SkillController::class, 'destroy'])->name('destroy');
+        Route::post('/reorder', [App\Http\Controllers\Admin\SkillController::class, 'reorder'])->name('reorder');
     });
 
     // Skill Categories Management Routes
@@ -112,6 +113,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/{skillCategory}/edit', [App\Http\Controllers\Admin\SkillCategoryController::class, 'edit'])->name('edit');
         Route::put('/{skillCategory}', [App\Http\Controllers\Admin\SkillCategoryController::class, 'update'])->name('update');
         Route::delete('/{skillCategory}', [App\Http\Controllers\Admin\SkillCategoryController::class, 'destroy'])->name('destroy');
+        Route::post('/reorder', [App\Http\Controllers\Admin\SkillCategoryController::class, 'reorder'])->name('reorder');
     });
 
     // Profile Routes

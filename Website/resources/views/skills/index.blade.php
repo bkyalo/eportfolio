@@ -67,16 +67,17 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
+                                            <th style="width: 40px;"></th>
                                             <th>Name</th>
                                             <th>Proficiency</th>
                                             <th>Status</th>
-                                            <th>Order</th>
                                             <th class="text-end">Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach($category->skills->sortBy('order') as $skill)
-                                            <tr>
+                                    <tbody id="skills-list-{{ $category->id }}" class="sortable" data-route="{{ route('skills.reorder') }}" data-token="{{ csrf_token() }}">
+                                        @foreach($category->skills as $skill)
+                                            <tr data-id="{{ $skill->id }}" class="sortable-item">
+                                                <td class="sortable-handle" style="cursor: move;"><i class="fas fa-arrows-alt"></i></td>
                                                 <td>
                                                     {{ $skill->name }}
                                                     @if($skill->is_featured)
@@ -86,7 +87,7 @@
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <div class="progress flex-grow-1 me-2" style="height: 20px;">
-                                                            <div class="progress-bar bg-{{ $this->getProficiencyColor($skill->proficiency) }}" 
+                                                            <div class="progress-bar bg-{{ \App\Models\Skill::getProficiencyColor($skill->proficiency) }}" 
                                                                  role="progressbar" 
                                                                  style="width: {{ $skill->proficiency }}%" 
                                                                  aria-valuenow="{{ $skill->proficiency }}" 
@@ -102,7 +103,7 @@
                                                         {{ $skill->is_active ? 'Active' : 'Inactive' }}
                                                     </span>
                                                 </td>
-                                                <td>{{ $skill->order }}</td>
+                                                <td class="sortable-handle" style="cursor: move;"><i class="fas fa-arrows-alt"></i></td>
                                                 <td class="text-end">
                                                     <div class="btn-group" role="group">
                                                         <a href="{{ route('skills.edit', $skill) }}" 
@@ -140,14 +141,73 @@
     </div>
 </div>
 
+@push('styles')
+<style>
+    .sortable {
+        min-height: 20px;
+    }
+    .sortable-item {
+        cursor: move;
+        transition: all 0.15s ease-in-out;
+    }
+    .sortable-item.sortable-ghost {
+        opacity: 0.5;
+        background: #f8f9fa;
+    }
+    .sortable-handle {
+        cursor: move;
+        opacity: 0.5;
+        transition: opacity 0.2s;
+    }
+    .sortable-item:hover .sortable-handle {
+        opacity: 1;
+    }
+</style>
+@endpush
+
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script>
+    // Initialize sortable on all skill lists
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.sortable').forEach(function(element) {
+            new Sortable(element, {
+                handle: '.sortable-handle',
+                ghostClass: 'sortable-ghost',
+                animation: 150,
+                onEnd: function(evt) {
+                    const itemEl = evt.item;
+                    const items = Array.from(evt.from.children).map((item, index) => ({
+                        id: item.dataset.id,
+                        order: index + 1
+                    }));
+                    
+                    // Send the new order to the server
+                    fetch(evt.from.dataset.route, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': evt.from.dataset.token
+                        },
+                        body: JSON.stringify({ items: items })
+                    });
+                }
+            });
+        });
+        
+        // Update all progress bars with the appropriate color
+        document.querySelectorAll('.progress-bar').forEach(function(bar) {
+            const proficiency = parseInt(bar.getAttribute('aria-valuenow'));
+            const color = getProficiencyColor(proficiency);
+            bar.classList.add('bg-' + color);
+        });
+    });
+    
     // Helper function to determine proficiency color
     function getProficiencyColor(proficiency) {
         if (proficiency >= 80) return 'success';
-        if (proficiency >= 60) return 'primary';
-        if (proficiency >= 40) return 'info';
-        if (proficiency >= 20) return 'warning';
+        if (proficiency >= 50) return 'primary';
+        if (proficiency >= 30) return 'warning';
         return 'danger';
     }
 </script>

@@ -109,4 +109,22 @@ class SkillCategoryController extends Controller
             ->route('skill-categories.index')
             ->with('success', 'Skill category deleted successfully!');
     }
+    
+    /**
+     * Reorder categories
+     */
+    public function reorder(Request $request)
+    {
+        $request->validate([
+            'items' => 'required|array',
+            'items.*.id' => 'required|exists:skill_categories,id',
+            'items.*.order' => 'required|integer|min:1'
+        ]);
+        
+        foreach ($request->items as $item) {
+            SkillCategory::where('id', $item['id'])->update(['order' => $item['order']]);
+        }
+        
+        return response()->json(['success' => true]);
+    }
 }

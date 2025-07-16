@@ -21,29 +21,42 @@
         </div>
     @endif
 
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="card">
-        <div class="card-body">
+        <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
                         <tr>
                             <th>Name</th>
                             <th>Skills</th>
-                            <th>Order</th>
                             <th>Status</th>
                             <th class="text-end">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="categories-list" 
+                           data-route="{{ route('skill-categories.reorder') }}" 
+                           data-token="{{ csrf_token() }}">
                         @forelse($categories as $category)
-                            <tr>
-                                <td>{{ $category->name }}</td>
-                                <td>{{ $category->skills_count }}</td>
-                                <td>{{ $category->order }}</td>
+                            <tr data-id="{{ $category->id }}" class="sortable-item">
+                                <td class="sortable-handle" style="cursor: move;">
+                                    <i class="fas fa-arrows-alt me-2"></i>
+                                    {{ $category->name }}
+                                </td>
                                 <td>
-                                    <span class="badge {{ $category->is_active ? 'bg-success' : 'bg-secondary' }}">
-                                        {{ $category->is_active ? 'Active' : 'Inactive' }}
-                                    </span>
+                                    <span class="badge bg-primary">{{ $category->skills_count }}</span>
+                                </td>
+                                <td>
+                                    @if($category->is_active)
+                                        <span class="badge bg-success">Active</span>
+                                    @else
+                                        <span class="badge bg-secondary">Inactive</span>
+                                    @endif
                                 </td>
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
@@ -77,7 +90,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center">No categories found.</td>
+                                <td colspan="5" class="text-center py-4">No categories found. <a href="{{ route('skill-categories.create') }}">Create one</a>.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -86,4 +99,55 @@
         </div>
     </div>
 </div>
+
+@push('styles')
+<style>
+    .sortable-ghost {
+        opacity: 0.5;
+        background: #f8f9fa;
+    }
+    .sortable-item {
+        cursor: move;
+    }
+    .sortable-handle {
+        cursor: move;
+        opacity: 0.5;
+        transition: opacity 0.2s;
+    }
+    .sortable-item:hover .sortable-handle {
+        opacity: 1;
+    }
+</style>
+@endpush
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const el = document.getElementById('categories-list');
+        if (el) {
+            new Sortable(el, {
+                handle: '.sortable-handle',
+                ghostClass: 'sortable-ghost',
+                animation: 150,
+                onEnd: function(evt) {
+                    const items = Array.from(evt.from.children).map((item, index) => ({
+                        id: item.dataset.id,
+                        order: index + 1
+                    }));
+                    
+                    fetch(evt.from.dataset.route, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': evt.from.dataset.token
+                        },
+                        body: JSON.stringify({ items: items })
+                    });
+                }
+            });
+        }
+    });
+</script>
+@endpush
 @endsection

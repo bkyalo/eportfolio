@@ -20,7 +20,11 @@ class SkillController extends Controller
             ->ordered()
             ->get();
             
-        return view('skills.index', compact('skills'));
+        $categories = SkillCategory::withCount('skills')
+            ->ordered()
+            ->get();
+            
+        return view('skills.index', compact('skills', 'categories'));
     }
 
     /**
@@ -115,5 +119,23 @@ class SkillController extends Controller
         return redirect()
             ->route('skills.index')
             ->with('success', 'Skill deleted successfully!');
+    }
+    
+    /**
+     * Reorder skills
+     */
+    public function reorder(Request $request)
+    {
+        $request->validate([
+            'items' => 'required|array',
+            'items.*.id' => 'required|exists:skills,id',
+            'items.*.order' => 'required|integer|min:1'
+        ]);
+        
+        foreach ($request->items as $item) {
+            Skill::where('id', $item['id'])->update(['order' => $item['order']]);
+        }
+        
+        return response()->json(['success' => true]);
     }
 }

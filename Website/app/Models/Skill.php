@@ -60,6 +60,20 @@ class Skill extends Model
     {
         return $query->orderBy('order')->orderBy('name');
     }
+    
+    /**
+     * Get the color class based on proficiency level
+     *
+     * @param int $proficiency
+     * @return string
+     */
+    public static function getProficiencyColor($proficiency)
+    {
+        if ($proficiency >= 80) return 'success';
+        if ($proficiency >= 50) return 'primary';
+        if ($proficiency >= 30) return 'warning';
+        return 'danger';
+    }
 
     public function getProficiencyPercentageAttribute()
     {
