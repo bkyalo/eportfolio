@@ -62,6 +62,14 @@
                 <a href="{{ route('fun-facts.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('fun-facts.*') ? 'active' : '' }}">
                     <i class="fas fa-lightbulb me-2"></i> Fun Facts
                 </a>
+                
+                <a href="{{ route('work-experience.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('work-experience.*') ? 'active' : '' }}">
+                    <i class="fas fa-briefcase me-2"></i> Work Experience
+                </a>
+                
+                <a href="{{ route('publications.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('publications.*') ? 'active' : '' }}">
+                    <i class="fas fa-book me-2"></i> Publications
+                </a>
             </div>
             <div class="border-top p-3 mt-auto">
                 <div class="d-flex align-items-center">

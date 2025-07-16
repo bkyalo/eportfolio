@@ -44,6 +44,19 @@ Route::middleware('auth')->group(function () {
             ->name('submissions.unread');
     });
     
+        // Work Experience Management
+    Route::prefix('work-experience')->name('work-experience.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Admin\WorkExperienceController::class, 'index'])->name('index');
+        Route::get('/create', [\App\Http\Controllers\Admin\WorkExperienceController::class, 'create'])->name('create');
+        Route::post('/', [\App\Http\Controllers\Admin\WorkExperienceController::class, 'store'])->name('store');
+        Route::get('/{workExperience}', [\App\Http\Controllers\Admin\WorkExperienceController::class, 'show'])->name('show');
+        Route::get('/{workExperience}/edit', [\App\Http\Controllers\Admin\WorkExperienceController::class, 'edit'])->name('edit');
+        Route::put('/{workExperience}', [\App\Http\Controllers\Admin\WorkExperienceController::class, 'update'])->name('update');
+        Route::delete('/{workExperience}', [\App\Http\Controllers\Admin\WorkExperienceController::class, 'destroy'])->name('destroy');
+        Route::patch('/{workExperience}/toggle-visibility', [\App\Http\Controllers\Admin\WorkExperienceController::class, 'toggleVisibility'])->name('toggle-visibility');
+        Route::post('/update-order', [\App\Http\Controllers\Admin\WorkExperienceController::class, 'updateOrder'])->name('update-order');
+    });
+    
     // Fun Facts Management
     Route::prefix('fun-facts')->name('fun-facts.')->group(function () {
         Route::get('/', [FunFactController::class, 'index'])->name('index');
