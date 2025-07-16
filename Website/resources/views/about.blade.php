@@ -224,59 +224,23 @@
         <section class="skills-section">
             <h2 class="section-heading">#skills</h2>
             <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Languages</h3>
-                    <ul>
-                        <li>TypeScript</li>
-                        <li>Lua</li>
-                        <li>Python</li>
-                        <li>JavaScript</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h3>Other</h3>
-                    <ul>
-                        <li>HTML</li>
-                        <li>CSS</li>
-                        <li>EJS</li>
-                        <li>SCSS</li>
-                        <li>REST</li>
-                        <li>Jinja</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h3>Tools</h3>
-                    <ul>
-                        <li>VSCode</li>
-                        <li>Neovim</li>
-                        <li>Linux</li>
-                        <li>Figma</li>
-                        <li>XFCE</li>
-                        <li>Arch</li>
-                        <li>Git</li>
-                        <li>Font Awesome</li>
-                        <li>KDE</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h3>Databases</h3>
-                    <ul>
-                        <li>SQLite</li>
-                        <li>PostgreSQL</li>
-                        <li>Mongo</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h3>Frameworks</h3>
-                    <ul>
-                        <li>React</li>
-                        <li>Vue</li>
-                        <li>Disnake</li>
-                        <li>Discord.js</li>
-                        <li>Flask</li>
-                        <li>Express.js</li>
-                    </ul>
-                </div>
+                @forelse($skillCategories as $category)
+                    <div class="skill-category">
+                        <h3>{{ $category->name }}</h3>
+                        <ul>
+                            @forelse($category->skills as $skill)
+                                <li>{{ $skill->name }}</li>
+                            @empty
+                                <li>No skills found in this category.</li>
+                            @endforelse
+                        </ul>
+                    </div>
+                @empty
+                    <div class="skill-category">
+                        <h3>Skills</h3>
+                        <li>No skill categories found.</li>
+                    </div>
+                @endforelse
             </div>
 
             <div class="shape" style="top: 150px; right: -50px; width: 80px; height: 80px;"></div>
