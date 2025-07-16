@@ -1,23 +1,23 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">Media Gallery</h4>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3">Media Gallery</h1>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
                         <i class="fas fa-plus me-1"></i> Add Image
                     </button>
-                </div>
+    </div>
 
-                <div class="card-body">
-                    @if(session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    <div class="card">
+        <div class="card-body">
 
                     <div class="row" id="media-sortable">
                         @foreach($media as $item)
@@ -49,8 +49,6 @@
                             </div>
                         @endforeach
                     </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
