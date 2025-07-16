@@ -361,8 +361,6 @@ a:hover {
    SKILLS SECTION
    ==================== */
 .skills-section {
-    padding: var(--space-xxl) 0;
-    background: var(--bg-tertiary, #161b22);
     position: relative;
     overflow: hidden;
 }

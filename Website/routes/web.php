@@ -5,10 +5,12 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\FunFactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PublicationController;
+use App\Http\Controllers\AboutPageController;
 use Illuminate\Support\Facades\Route;
 
 // Public Routes
 Route::get('/', [App\Http\Controllers\PortfolioController::class, 'index'])->name('home');
+Route::get('/about', [AboutPageController::class, 'index'])->name('about');
 
 // Contact Form Routes
 Route::controller(\App\Http\Controllers\ContactPageController::class)->group(function () {
