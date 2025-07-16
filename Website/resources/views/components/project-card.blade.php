@@ -49,7 +49,6 @@
 <style>
     .project-card {
         background-color: var(--card-bg);
-        border-radius: 8px;
         width: 100%;
         max-width: 400px;
         overflow: hidden;

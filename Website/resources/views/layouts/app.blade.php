@@ -13,7 +13,8 @@
     {{-- Link to your compiled CSS file --}}
     {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
     
-    {{-- Add your custom styles here or in the app.css file --}}
+    {{-- Stack for additional styles --}}
+    @stack('styles')
     <style>
         /* All the CSS from your original file goes here */
         :root {
@@ -212,11 +213,40 @@ a:hover {
     z-index: 100;
 }
 
+.social-sidebar {
+    position: fixed;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    z-index: 100;
+}
+
+.social-sidebar a {
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    font-size: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+}
+
+.social-sidebar a:hover {
+    color: var(--accent-purple);
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.2);
+}
+
 .social-sidebar svg {
-    width: 24px;
-    height: 24px;
-    fill: var(--text-color);
-    transition: fill 0.3s ease;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .social-sidebar a:hover svg {
@@ -709,5 +739,6 @@ a:hover {
 
     {{-- Link to your compiled JS file --}}
     <script src="{{ asset('js/app.js') }}"></script>
+    @stack('scripts')
 </body>
 </html>
