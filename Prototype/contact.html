@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ben Tito - Contact</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #0a0e14;
+            --accent-purple: #8a63d2;
+            --accent-green: #2ea043;
+            --accent-red: #f85149;
+            --text-primary: #e6edf3;
+            --text-secondary: #7d8590;
+            --border-color: #30363d;
+            --card-bg: #161b22;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            margin: 0;
+            padding: 2rem 5%;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            padding: 0 1rem;
+        }
+
+        /* --- Header & Sidebar --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .header-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .header-logo:hover {
+            color: var(--accent-purple);
+        }
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+        .header-nav a {
+            font-family: var(--font-mono);
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .header-nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-purple);
+            transition: var(--transition);
+        }
+        
+        .header-nav a:hover, 
+        .header-nav a.active {
+            color: var(--text-primary);
+        }
+        
+        .header-nav a:hover::after,
+        .header-nav a.active::after {
+            width: 100%;
+        }
+        .lang-switcher {
+            font-family: var(--font-mono);
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+        
+        .lang-switcher:hover {
+            color: var(--text-primary);
+            border-color: var(--text-primary);
+        }
+        .social-sidebar {
+            position: fixed;
+            top: 50%;
+            left: 2rem;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 100;
+        }
+        
+        .social-sidebar a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
+        
+        .social-sidebar svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-secondary);
+            transition: var(--transition);
+        }
+        
+        .social-sidebar a:hover {
+            background: var(--accent-purple);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(138, 99, 210, 0.3);
+        }
+        
+        .social-sidebar a:hover svg {
+            fill: white;
+        }
+        
+        /* --- Main Content Sections --- */
+        .contact-method {
+            margin: 2.5rem 0;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .contact-method:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-color: var(--accent-purple);
+        }
+        
+        .contact-method h3 {
+            font-size: 1.3rem;
+            margin: 0 0 1.5rem 0;
+            color: var(--accent-purple);
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+        
+        .contact-method h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-purple);
+        }
+        
+        .contact-method p {
+            margin: 0.75rem 0;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        .contact-method strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .contact-method a {
+            color: var(--accent-purple);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            font-weight: 500;
+        }
+        
+        .contact-method a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--accent-purple);
+            transition: var(--transition);
+        }
+        
+        .contact-method a:hover {
+            color: #b392f0;
+        }
+        
+        .contact-method a:hover::after {
+            width: 100%;
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+        }
+        
+        .section-header h1 {
+            font-family: var(--font-mono);
+            font-size: 2.5rem;
+            margin: 0 0 0.75rem 0;
+            color: var(--text-primary);
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        
+        .section-header .subheading {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin: 0;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 3rem;
+            align-items: start;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 900px) {
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .social-sidebar {
+                display: none;
+            }
+        }
+        .contact-content p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin: 0 0 2rem 0;
+            font-size: 1.05rem;
+        }
+        .submit-btn {
+            background-color: var(--accent-purple);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .submit-btn:hover {
+            background-color: #7c4dff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(138, 99, 210, 0.3);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .media-section {
+            position: relative;
+            padding: 5rem 0 0 0;
+            margin-top: 5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .media-section .dots {
+            display: none;
+        }
+        .media-section h2 {
+            font-family: var(--font-mono);
+            font-size: 1.8rem;
+            margin: 0 0 2rem 0;
+            color: var(--text-primary);
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        .media-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .media-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            transition: var(--transition);
+            padding: 0.75rem 1.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--card-bg);
+            font-size: 0.95rem;
+        }
+        
+        .media-links a:hover {
+            color: var(--accent-purple);
+            border-color: var(--accent-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(138, 99, 210, 0.2);
+        }
+        
+        .media-links svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            transition: var(--transition);
+        }
+        
+        /* --- Footer --- */
+        .footer {
+            margin-top: 8rem;
+            padding-top: 4rem;
+            border-top: 1px solid var(--border-color);
+            position: relative;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        .footer-info h3 {
+            font-size: 1.3rem;
+            margin: 0 0 1rem 0;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        .footer-info p {
+            color: var(--text-secondary);
+            margin: 0.5rem 0 0 0;
+            line-height: 1.7;
+            max-width: 400px;
+        }
+        .footer-media h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0 0 1.5rem 0;
+            color: var(--text-primary);
+        }
+        .footer-social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .footer-social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
+        
+        .footer-social-links svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--text-secondary);
+            transition: var(--transition);
+        }
+        
+        .footer-social-links a:hover {
+            background: var(--accent-purple);
+            border-color: var(--accent-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(138, 99, 210, 0.3);
+        }
+        
+        .footer-social-links a:hover svg {
+            fill: white;
+        }
+        .footer-copyright {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem 0;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <header class="header">
+            <div class="header-logo">Ben Tito</div>
+            <nav class="header-nav">
+                <a href="index.html">#home</a>
+                <a href="index.html#works">#projects</a>
+                <a href="index.html#skills">#skills</a>
+                <a href="about.html">#about-me</a>
+                <a href="contact.html" class="active">#contacts</a>
+                <span class="lang-switcher">EN</span>
+            </nav>
+        </header>
+
+        <aside class="social-sidebar">
+            <a href="https://github.com/bkyalo" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+            <a href="https://x.com/bentitojr" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        </aside>
+
+        <main>
+            <section class="contact-section">
+                <div class="section-header">
+                    <h1>/contact-me</h1>
+                    <p class="subheading">Get in touch</p>
+                </div>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <p>I'm interested in opportunities that combine electrical engineering and IT. Whether you have a project in mind or just want to connect, feel free to reach out!</p>
+                        
+                        <div class="contact-method">
+                            <h3>Contact Information</h3>
+                            <p><strong>Location:</strong> Kipande Road 05, 00100, Nairobi</p>
+                            <p><strong>Phone:</strong> <a href="tel:+254757135612">+254 757 135 612</a> / 0757135612</p>
+                            <p><strong>Personal Email:</strong> <a href="mailto:benkyalo075@gmail.com">benkyalo075@gmail.com</a></p>
+                            <p><strong>Work Email:</strong> <a href="mailto:bentito@ouk.ac.ke">bentito@ouk.ac.ke</a></p>
+                            <p><strong>Website:</strong> <a href="https://bentito.snap.co.ke" target="_blank">bentito.snap.co.ke</a></p>
+                        </div>
+                        
+                        <div class="social-links">
+                            <a href="https://github.com/bkyalo" target="_blank" class="social-link">GitHub</a>
+                            <a href="https://x.com/bentitojr" target="_blank" class="social-link">X (Twitter)</a>
+                            <a href="https://facebook.com/tito.kyalo" target="_blank" class="social-link">Facebook</a>
+                        </div>
+                    </div>
+                    
+                    <form class="contact-form" action="#" method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="media-section">
+                <div class="dots"></div>
+                <h2>#all-media</h2>
+                <div class="media-links">
+                        <a href="https://github.com/bkyalo" target="_blank">
+                            <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                            <span>@bkyalo</span>
+                        </a>
+                        <a href="https://x.com/bentitojr" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616v.064c0 2.296 1.634 4.208 3.803 4.649-.623.169-1.282.22-1.943.22-.304 0-.6-.028-.887-.083.606 1.874 2.368 3.24 4.456 3.28-1.715 1.341-3.869 2.14-6.217 2.14-1.261 0-2.409-.225-3.481-.68 2.062 1.325 4.522 2.103 7.188 2.103 8.628 0 13.34-7.157 13.01-13.684.894-.643 1.669-1.451 2.285-2.374z"/></svg>
+                            <span>@bentitojr</span>
+                        </a>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Ben Tito Kyalo <span style="color: var(--text-secondary)">benkyalo075@gmail.com</span></h3>
+                    <p>Electrical and Electronics Engineer & IT Consultant</p>
+                </div>
+                <div class="footer-media">
+                    <h3>Media</h3>
+                    <div class="footer-social-links">
+                         <a href="https://github.com/bkyalo" target="_blank" aria-label="GitHub"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                        <a href="https://x.com/bentitojr" target="_blank" aria-label="X (Twitter)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616v.064c0 2.296 1.634 4.208 3.803 4.649-.623.169-1.282.22-1.943.22-.304 0-.6-.028-.887-.083.606 1.874 2.368 3.24 4.456 3.28-1.715 1.341-3.869 2.14-6.217 2.14-1.261 0-2.409-.225-3.481-.68 2.062 1.325 4.522 2.103 7.188 2.103 8.628 0 13.34-7.157 13.01-13.684.894-.643 1.669-1.451 2.285-2.374z"/></svg></a>
+                         <a href="https://facebook.com/tito.kyalo" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/></svg></a>
+                    </div>
+                </div>
+            </div>
+            <p class="footer-copyright">© 2024 Ben Tito Kyalo. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
