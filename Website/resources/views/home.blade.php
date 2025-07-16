@@ -3,30 +3,159 @@
 @section('content')
     <div class="container">
         <!-- Hero Section -->
-    <section id="home" class="hero py-5 py-lg-6">
-        <div class="row align-items-center">
-            <div class="col-lg-6 mb-5 mb-lg-0">
-                <h1 class="display-4 fw-bold mb-4">{{ $contact->name ?? 'Ben Tito' }} - <span class="text-primary">{{ $contact->job_title ?? 'Electrical & Electronics Engineer' }}</span>@if($contact->tags) <span class="text-primary">{{ $contact->job_title ? 'and' : '' }} {{ $contact->tags }}</span>@endif</h1>
-                @if($contact->home_description)
-                    <p class="lead mb-4">{{ $contact->home_description }}</p>
-                @else
-                    <p class="lead mb-4">Bridging engineering and technology to create innovative solutions</p>
-                @endif
-                <a href="#contacts" class="btn btn-primary btn-lg px-4 me-2">Contact me !!</a>
-                <a href="#works" class="btn btn-outline-light btn-lg px-4">View my work</a>
-            </div>
-            <div class="col-lg-6 position-relative">
-                <div class="hero-image-container position-relative">
-                    <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary rounded-4" style="z-index: -1; transform: rotate(3deg);"></div>
-                    <img src="{{ asset('images/tiro.png') }}" alt="Ben Tito" class="img-fluid rounded-4 shadow-lg" style="position: relative; z-index: 1;">
-                    <div class="status position-absolute bottom-0 start-50 translate-middle-x d-flex align-items-center bg-dark text-white px-3 py-2 rounded-pill shadow-sm">
-                        <span class="me-2">🟢</span>
-                        <span>Currently working on <strong>Portfolio</strong></span>
+    <section id="home" class="hero-section py-5 py-lg-6">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-text">
+                    <h1>{{ $contact->name ?? 'Ben Tito' }} is a <span class="highlight typewriter" data-words='[{{ $contact->tags ? collect(explode(',', $contact->tags))->map(fn($tag) => '"' . trim($tag) . '"')->implode(',') : '' }}]' data-wait="2000"></span></h1>
+                    @if($contact->home_description)
+                        <p class="subtitle">{{ $contact->home_description }}</p>
+                    @else
+                        <p class="subtitle">Bridging engineering and technology to create innovative solutions</p>
+                    @endif
+                    <a href="#contacts" class="contact-button">Contact me !!</a>
+                </div>
+
+                <div class="hero-image-wrapper">
+                    <div class="deco-square square-1"></div>
+                    <div class="deco-square square-2"></div>
+                    <div class="deco-dots"></div>
+                    <img src="{{ asset('images/tiro.png') }}" alt="{{ $contact->name ?? 'Ben Tito' }}" class="hero-image">
+                    <div class="status-box">
+                        <div class="dot"></div>
+                        Currently working on <strong>Portfolio</strong>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <style>
+        /* Hero Section */
+        .hero-section {
+            color: #e0e0e0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            font-weight: 400;
+            line-height: 1.3;
+            margin: 0 0 1.5rem 0;
+        }
+
+        .hero-text .highlight {
+            font-weight: 700;
+            color: #a855f7;
+        }
+
+        .hero-text .subtitle {
+            font-size: 1rem;
+            color: #a0a0a0;
+            margin-bottom: 2rem;
+            max-width: 400px;
+        }
+
+        .contact-button {
+            font-family: 'Fira Code', monospace;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid #4d4d4d;
+            background: transparent;
+            color: #a0a0a0;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .contact-button:hover {
+            border-color: #e0e0e0;
+            color: #e0e0e0;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image {
+            max-width: 400px;
+            width: 100%;
+            z-index: 10;
+            position: relative;
+        }
+
+        .deco-square {
+            position: absolute;
+            border: 1px solid #a855f7;
+            opacity: 0.6;
+            z-index: 1;
+        }
+
+        .square-1 { top: 30px; left: 40px; width: 120px; height: 120px; }
+        .square-2 { top: 50px; left: 60px; width: 120px; height: 120px; }
+
+        .deco-dots {
+            position: absolute;
+            width: 75px;
+            height: 75px;
+            background-image: radial-gradient(circle, #4d4d4d 2px, transparent 2px);
+            background-size: 15px 15px;
+            z-index: 1;
+            right: 40px;
+            bottom: 80px;
+        }
+
+        .status-box {
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 360px;
+            border: 1px solid #4d4d4d;
+            padding: 0.5rem 1rem;
+            background-color: #242429;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Fira Code', monospace;
+            z-index: 11;
+        }
+
+        .status-box .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #a855f7;
+            border-radius: 50%;
+        }
+
+        .status-box strong {
+            color: #e0e0e0;
+        }
+
+        @media (max-width: 992px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text .subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
 
     <!-- Quote Section -->
     <section class="quote-section py-5 my-5">
@@ -55,20 +184,22 @@
                 <p>Here are some of my recent projects that showcase my skills and expertise in various technologies.</p>
             </div>
             
-            <div class="projects-grid mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach($projects as $index => $project)
-                    <div class="project-card-wrapper" style="--index: {{ $index }}">
-                        <x-project-card 
-                            :title="$project['title']"
-                            :description="$project['description']"
-                            :techStack="$project['tech_stack']"
-                            :image="$project['image']"
-                            :liveUrl="$project['live_url']"
-                            :codeUrl="$project['code_url']"
-                            :accent="$project['accent'] ?? 'purple'"
-                        />
-                    </div>
-                @endforeach
+            <div class="mt-12">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @foreach($projects as $index => $project)
+                        <div class="project-card-wrapper" style="--index: {{ $index }}">
+                            <x-project-card 
+                                :title="$project['title']"
+                                :description="$project['description']"
+                                :techStack="$project['tech_stack']"
+                                :image="$project['image']"
+                                :liveUrl="$project['live_url']"
+                                :codeUrl="$project['code_url']"
+                                :accent="$project['accent'] ?? 'purple'"
+                            />
+                        </div>
+                    @endforeach
+                </div>
             </div>
             
             <div class="view-more">
@@ -322,6 +453,66 @@
                     behavior: 'smooth'
                 });
             });
+        });
+    </script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            class TypeWriter {
+                constructor(txtElement, words, wait = 3000) {
+                    this.txtElement = txtElement;
+                    this.words = words;
+                    this.txt = '';
+                    this.wordIndex = 0;
+                    this.wait = parseInt(wait, 10);
+                    this.type();
+                    this.isDeleting = false;
+                }
+
+                type() {
+                    const current = this.wordIndex % this.words.length;
+                    const fullTxt = this.words[current];
+
+                    if (this.isDeleting) {
+                        this.txt = fullTxt.substring(0, this.txt.length - 1);
+                    } else {
+                        this.txt = fullTxt.substring(0, this.txt.length + 1);
+                    }
+
+                    this.txtElement.innerHTML = `<span class="highlight">${this.txt}</span>`;
+
+                    let typeSpeed = 100;
+
+                    if (this.isDeleting) {
+                        typeSpeed /= 2;
+                    }
+
+                    if (!this.isDeleting && this.txt === fullTxt) {
+                        typeSpeed = this.wait;
+                        this.isDeleting = true;
+                    } else if (this.isDeleting && this.txt === '') {
+                        this.isDeleting = false;
+                        this.wordIndex++;
+                        typeSpeed = 500;
+                    }
+
+                    setTimeout(() => this.type(), typeSpeed);
+                }
+            }
+
+            const init = () => {
+                const txtElement = document.querySelector('.typewriter');
+                if (txtElement) {
+                    let words = JSON.parse(txtElement.getAttribute('data-words'));
+                    // Process words to ensure they're properly formatted
+                    words = words.map(word => word.trim());
+                    const wait = parseInt(txtElement.getAttribute('data-wait') || 2000, 10);
+                    new TypeWriter(txtElement, words, wait);
+                }
+            };
+
+            // Initialize with a small delay to ensure DOM is fully loaded
+            setTimeout(init, 500);
         });
     </script>
 @endsection
