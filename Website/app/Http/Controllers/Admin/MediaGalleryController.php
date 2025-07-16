@@ -13,7 +13,7 @@ class MediaGalleryController extends Controller
     public function index()
     {
         $media = MediaGallery::orderBy('order')->get();
-        return view('admin.media-gallery.index', compact('media'));
+        return view('media-gallery.index', compact('media'));
     }
 
     public function store(Request $request)

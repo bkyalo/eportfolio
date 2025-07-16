@@ -105,8 +105,8 @@ Route::middleware('auth')->group(function () {
     });
 
     // Media Gallery Routes
-    Route::resource('media-gallery', \App\Http\Controllers\MediaGalleryController::class);
-    Route::post('media-gallery/reorder', [\App\Http\Controllers\MediaGalleryController::class, 'reorder'])->name('media-gallery.reorder');
+    Route::resource('media-gallery', \App\Http\Controllers\Admin\MediaGalleryController::class);
+    Route::post('media-gallery/reorder', [\App\Http\Controllers\Admin\MediaGalleryController::class, 'reorder'])->name('media-gallery.reorder');
 
     // Skill Categories Management Routes
     Route::prefix('skill-categories')->name('skill-categories.')->group(function () {
