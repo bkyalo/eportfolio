@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
@@ -11,8 +10,24 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 
 class Media extends BaseMedia implements HasMedia
 {
-    use HasFactory, InteractsWithMedia, SoftDeletes;
+    use InteractsWithMedia, SoftDeletes;
 
+    protected $table = 'media';
+    
+    protected $guarded = [];
+    
+    protected $attributes = [
+        'manipulations' => '[]',
+        'custom_properties' => '[]',
+        'generated_conversions' => '[]',
+        'responsive_images' => '[]',
+        'dimensions' => '[]',
+        'is_visible' => true,
+        'is_featured' => false,
+        'size' => 0,
+        'order_column' => 0,
+    ];
+    
     protected $fillable = [
         'title',
         'description',
@@ -25,20 +40,37 @@ class Media extends BaseMedia implements HasMedia
         'is_visible',
         'is_featured',
         'order_column',
-        'custom_properties'
+        'custom_properties',
+        'name',
+        'file_name',
+        'disk',
+        'conversions_disk',
+        'collection_name',
+        'uuid',
+        'model_type',
+        'model_id'
     ];
-
+    
     protected $casts = [
-        'dimensions' => 'array',
         'custom_properties' => 'array',
+        'manipulations' => 'array',
+        'generated_conversions' => 'array',
+        'responsive_images' => 'array',
+        'dimensions' => 'array',
         'is_visible' => 'boolean',
         'is_featured' => 'boolean',
         'size' => 'integer',
         'order_column' => 'integer',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
-
+    
     protected $appends = ['url', 'thumbnail_url'];
 
+    /**
+     * Register the media collections.
+     */
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('default')

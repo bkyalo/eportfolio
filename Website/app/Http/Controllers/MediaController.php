@@ -45,50 +45,89 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'file' => 'required_without:video_url|file|mimes:jpeg,png,jpg,gif,webp,mp4,mov,avi,wmv|max:102400', // 100MB max
-            'video_url' => 'nullable|url',
+            'file' => 'required_without:video_url|file|mimes:jpeg,png,jpg,gif,webp,mp4,mov,avi,wmv|max:102400',
+            'video_url' => 'required_without:file|nullable|url',
             'is_visible' => 'boolean',
             'is_featured' => 'boolean',
         ]);
 
-        $media = new Media([
-            'title' => $validated['title'],
-            'description' => $validated['description'] ?? null,
-            'is_visible' => $validated['is_visible'] ?? true,
-            'is_featured' => $validated['is_featured'] ?? false,
-        ]);
-
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $mimeType = $file->getMimeType();
-            $type = str_starts_with($mimeType, 'video/') ? 'video' : 'image';
-            
-            $media->type = $type;
-            $media->mime_type = $mimeType;
-            $media->size = $file->getSize();
+        try {
+            // Create media record with all required fields
+            $media = new Media();
+            $media->title = $request->title ?? 'Untitled ' . now()->format('Y-m-d H:i:s');
+            $media->description = $request->description;
+            $media->is_visible = $request->boolean('is_visible', true);
+            $media->is_featured = $request->boolean('is_featured', false);
+            $media->model_type = Media::class;
+            $media->model_id = 1; // Default model ID, adjust as needed
+            $media->collection_name = 'default';
+            $media->name = $request->title;
+            $media->file_name = $request->hasFile('file') ? $request->file('file')->getClientOriginalName() : 'video_' . time();
+            $media->mime_type = $request->hasFile('file') ? $request->file('file')->getMimeType() : 'video/url';
+            $media->disk = 'public';
+            $media->conversions_disk = 'public';
+            $media->size = $request->hasFile('file') ? $request->file('file')->getSize() : 0;
+            $media->type = $request->hasFile('file') ? (str_starts_with($media->mime_type, 'image/') ? 'image' : 'video') : 'video';
             $media->save();
 
-            $media->addMedia($file)
-                ->usingName(Str::slug($validated['title']))
-                ->toMediaCollection('default');
-                
-            // Update dimensions if it's an image
-            if ($type === 'image') {
-                $media->dimensions = getimagesize($file);
-                $media->save();
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $media->addMedia($file)
+                    ->withCustomProperties([
+                        'title' => $request->title,
+                        'description' => $request->description
+                    ])
+                    ->toMediaCollection();
+            } elseif ($request->filled('video_url')) {
+                $media->type = 'video';
+                $media->addMediaFromUrl($request->video_url)
+                    ->withCustomProperties([
+                        'video_url' => $request->video_url,
+                        'title' => $request->title,
+                        'description' => $request->description
+                    ])
+                    ->toMediaCollection();
             }
-        } elseif (!empty($validated['video_url'])) {
-            $media->type = 'video';
-            $media->custom_properties = ['video_url' => $validated['video_url']];
-            $media->save();
-        }
 
-        return redirect()
-            ->route('media.index')
-            ->with('success', 'Media uploaded successfully!');
+            $response = [
+                'success' => true,
+                'message' => 'Media uploaded successfully!',
+                'media' => [
+                    'id' => $media->id,
+                    'title' => $media->title,
+                    'url' => $media->getUrl(),
+                    'type' => $media->type,
+                    'is_featured' => $media->is_featured,
+                    'is_visible' => $media->is_visible,
+                    'created_at' => $media->created_at->diffForHumans(),
+                ]
+            ];
+
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json($response);
+            }
+
+            return redirect()
+                ->route('media.index')
+                ->with('success', $response['message']);
+
+        } catch (\Exception $e) {
+            $errorMessage = 'Error uploading media: ' . $e->getMessage();
+            
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $errorMessage
+                ], 500);
+            }
+
+            return back()
+                ->withInput()
+                ->with('error', $errorMessage);
+        }
     }
 
     /**

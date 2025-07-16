@@ -46,7 +46,7 @@
                     <h4 class="mb-0">Upload Media</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('media.store') }}" method="POST" enctype="multipart/form-data" id="media-upload-form">
+                    <form action="{{ route('media.store') }}" method="POST" enctype="multipart/form-data" id="media-upload-form" onsubmit="return submitMediaForm(event)">
                         @csrf
                         
                         <div class="mb-4">
@@ -110,10 +110,16 @@
                             <a href="{{ route('media.index') }}" class="btn btn-outline-secondary">
                                 <i class="fas fa-arrow-left me-1"></i> Cancel
                             </a>
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary" id="submit-button">
                                 <i class="fas fa-upload me-1"></i> Upload Media
                             </button>
+                            <button class="btn btn-primary d-none" type="button" disabled id="loading-button">
+                                <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                                Uploading...
+                            </button>
                         </div>
+                        <div class="alert alert-success mt-3 d-none" id="success-message"></div>
+                        <div class="alert alert-danger mt-3 d-none" id="error-message"></div>
                     </form>
                 </div>
             </div>
@@ -275,23 +281,76 @@
             return null;
         }
         
+        // Handle form submission with AJAX
+        function submitMediaForm(e) {
+            e.preventDefault();
+            
+            // Reset messages
+            document.getElementById('success-message').classList.add('d-none');
+            document.getElementById('error-message').classList.add('d-none');
+            
+            // Show loading state
+            document.getElementById('submit-button').classList.add('d-none');
+            document.getElementById('loading-button').classList.remove('d-none');
+            
+            // Get form data
+            const form = document.getElementById('media-upload-form');
+            const formData = new FormData(form);
+            
+            // Send AJAX request
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide loading state
+                document.getElementById('submit-button').classList.remove('d-none');
+                document.getElementById('loading-button').classList.add('d-none');
+                
+                if (data.success) {
+                    // Show success message
+                    const successMessage = document.getElementById('success-message');
+                    successMessage.textContent = data.message || 'Media uploaded successfully!';
+                    successMessage.classList.remove('d-none');
+                    
+                    // Reset form
+                    form.reset();
+                    resetFileInfo();
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    
+                    // Optionally, you can update the media grid here if you want to show the new item
+                    // without refreshing the page
+                } else {
+                    throw new Error(data.message || 'An error occurred');
+                }
+            })
+            .catch(error => {
+                // Hide loading state
+                document.getElementById('submit-button').classList.remove('d-none');
+                document.getElementById('loading-button').classList.add('d-none');
+                
+                // Show error message
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.textContent = error.message || 'An error occurred while uploading the media.';
+                errorMessage.classList.remove('d-none');
+                
+                // Scroll to error
+                window.scrollTo({ top: errorMessage.offsetTop - 20, behavior: 'smooth' });
+            });
+            
+            return false;
+        }
+        
         // Form validation
-        form.addEventListener('submit', function(e) {
-            if (!fileInput.files.length && !videoUrlInput.value) {
-                e.preventDefault();
-                alert('Please select a file or enter a video URL');
-                return false;
-            }
-            
-            if (!form.title.value.trim()) {
-                e.preventDefault();
-                alert('Please enter a title');
-                form.title.focus();
-                return false;
-            }
-            
-            return true;
-        });
+        form.addEventListener('submit', submitMediaForm);
     });
 </script>
 @endpush
