@@ -37,10 +37,47 @@
                         <h5 class="text-muted mb-4">{{ $contact->job_title }}</h5>
                     @endif
                     
+                    @if($contact->saying)
+                        <div class="card bg-light p-4 mb-4">
+                            <h5 class="mb-3">Favorite Quote</h5>
+                            <blockquote class="blockquote mb-0">
+                                <p class="mb-2">"{{ $contact->saying }}"</p>
+                                @if($contact->saying_author)
+                                    <footer class="blockquote-footer">{{ $contact->saying_author }}</footer>
+                                @endif
+                            </blockquote>
+                        </div>
+                    @endif
+                    
                     @if($contact->bio)
                         <div class="card bg-light p-4 mb-4">
                             <h5 class="mb-3">About Me</h5>
                             <p class="mb-0">{{ $contact->bio }}</p>
+                        </div>
+                    @endif
+                    
+                    @if($contact->tags)
+                        <div class="mb-4">
+                            @php
+                                $tags = explode(',', $contact->tags);
+                            @endphp
+                            @foreach($tags as $tag)
+                                <span class="badge bg-primary me-2 mb-2">{{ trim($tag) }}</span>
+                            @endforeach
+                        </div>
+                    @endif
+                    
+                    @if($contact->home_description)
+                        <div class="card bg-light p-4 mb-4">
+                            <h5 class="mb-3">Home Page Introduction</h5>
+                            <p class="mb-0">{{ $contact->home_description }}</p>
+                        </div>
+                    @endif
+                    
+                    @if($contact->contact_description)
+                        <div class="card bg-light p-4 mb-4">
+                            <h5 class="mb-3">Contact Page Message</h5>
+                            <p class="mb-0">{{ $contact->contact_description }}</p>
                         </div>
                     @endif
                     

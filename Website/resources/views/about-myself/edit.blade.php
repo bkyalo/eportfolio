@@ -33,6 +33,13 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
+                    <button class="nav-link {{ session('active_tab') === 'additional' ? 'active' : '' }}" 
+                            id="additional-tab" data-bs-toggle="tab" data-bs-target="#additional" 
+                            type="button" role="tab" aria-controls="additional" aria-selected="false">
+                        <i class="fas fa-plus-circle me-1"></i> Additional Info
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
                     <button class="nav-link {{ session('active_tab') === 'photo' ? 'active' : '' }}" 
                             id="photo-tab" data-bs-toggle="tab" data-bs-target="#photo" 
                             type="button" role="tab" aria-controls="photo" aria-selected="false">
@@ -163,6 +170,77 @@
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save me-1"></i> Save Changes
                             </button>
+                        </div>
+                    </div>
+
+                    <!-- Additional Info Tab -->
+                    <div class="tab-pane fade {{ session('active_tab') === 'additional' ? 'show active' : '' }}" 
+                         id="additional" role="tabpanel" aria-labelledby="additional-tab">
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <label for="saying" class="form-label">Favorite Saying/Quote</label>
+                                <textarea id="saying" class="form-control @error('saying') is-invalid @enderror" 
+                                          name="saying" rows="2">{{ old('saying', $contact->saying ?? '') }}</textarea>
+                                @error('saying')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <label for="saying_author" class="form-label">Quote Author</label>
+                                <input id="saying_author" type="text" class="form-control @error('saying_author') is-invalid @enderror" 
+                                       name="saying_author" value="{{ old('saying_author', $contact->saying_author ?? '') }}">
+                                @error('saying_author')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <label for="tags" class="form-label">Tags (comma separated, e.g., engineer, developer, designer)</label>
+                                <input id="tags" type="text" class="form-control @error('tags') is-invalid @enderror" 
+                                       name="tags" value="{{ old('tags', $contact->tags ?? '') }}">
+                                @error('tags')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <label for="home_description" class="form-label">Home Page Description</label>
+                                <textarea id="home_description" class="form-control @error('home_description') is-invalid @enderror" 
+                                          name="home_description" rows="4">{{ old('home_description', $contact->home_description ?? '') }}</textarea>
+                                <div class="form-text">A brief introduction that will appear on the home page.</div>
+                                @error('home_description')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <label for="contact_description" class="form-label">Contact Page Description</label>
+                                <textarea id="contact_description" class="form-control @error('contact_description') is-invalid @enderror" 
+                                          name="contact_description" rows="4">{{ old('contact_description', $contact->contact_description ?? '') }}</textarea>
+                                <div class="form-text">A brief message that will appear on the contact page.</div>
+                                @error('contact_description')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
 

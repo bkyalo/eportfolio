@@ -49,6 +49,11 @@ class SiteContactController extends Controller
             'location' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
             'bio' => 'nullable|string|max:1000',
+            'saying' => 'nullable|string|max:500',
+            'saying_author' => 'nullable|string|max:255',
+            'tags' => 'nullable|string|max:255',
+            'home_description' => 'nullable|string|max:1000',
+            'contact_description' => 'nullable|string|max:1000',
             'profile_photo' => 'nullable|image|max:2048',
         ]);
 

@@ -28,6 +28,11 @@ class SiteContactDetail extends Model
         'location',
         'address',
         'bio',
+        'saying',
+        'saying_author',
+        'tags',
+        'home_description',
+        'contact_description',
         'profile_photo_path',
     ];
 
