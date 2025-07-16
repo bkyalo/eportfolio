@@ -116,6 +116,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/reorder', [App\Http\Controllers\Admin\SkillCategoryController::class, 'reorder'])->name('reorder');
     });
 
+    // Media Gallery Routes
+    Route::resource('media', \App\Http\Controllers\MediaController::class)->except(['show']);
+    Route::post('media/reorder', [\App\Http\Controllers\MediaController::class, 'reorder'])->name('media.reorder');
+    
     // Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

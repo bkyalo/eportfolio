@@ -75,6 +75,10 @@
                     <i class="fas fa-user me-2"></i> My Self
                 </a>
                 
+                <a href="{{ route('media.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('media.*') ? 'active' : '' }}">
+                    <i class="fas fa-images me-2"></i> Media Gallery
+                </a>
+                
                 <!-- Skills Dropdown -->
                 <div class="list-group-item p-0">
                     <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center {{ request()->routeIs('skills.*') || request()->routeIs('skill-categories.*') ? 'active' : '' }}" 
