@@ -38,7 +38,7 @@ class MediaGalleryController extends Controller
             'is_published' => $request->has('publish')
         ]);
 
-        return redirect()->route('admin.media-gallery.index')
+        return redirect()->route('media-gallery.index')
             ->with('success', 'Image uploaded successfully!');
     }
 
@@ -74,7 +74,7 @@ class MediaGalleryController extends Controller
 
         $mediaGallery->update($data);
 
-        return redirect()->route('admin.media-gallery.index')
+        return redirect()->route('media-gallery.index')
             ->with('success', 'Image updated successfully!');
     }
 
