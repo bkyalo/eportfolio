@@ -82,6 +82,19 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input id="phone" type="tel" class="form-control @error('phone') is-invalid @enderror" 
+                                       name="phone" value="{{ old('phone', $contact->phone ?? '') }}">
+                                @error('phone')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
                                 <label for="job_title" class="form-label">Job Title</label>
                                 <input id="job_title" type="text" class="form-control @error('job_title') is-invalid @enderror" 
                                        name="job_title" value="{{ old('job_title', $contact->job_title ?? '') }}">
@@ -135,12 +148,21 @@
                             </div>
                             
                             <div class="col-md-6">
-                                <label for="linkedin_url" class="form-label">LinkedIn URL</label>
+                                <label for="linkedin_url" class="form-label">LinkedIn Profile</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text">linkedin.com/in/</span>
+                                    @php
+                                        $linkedinUsername = '';
+                                        if (isset($contact->linkedin_url)) {
+                                            $linkedinUsername = str_replace('https://linkedin.com/in/', '', $contact->linkedin_url);
+                                            $linkedinUsername = trim($linkedinUsername, '/');
+                                        }
+                                    @endphp
                                     <input id="linkedin_url" type="text" class="form-control @error('linkedin_url') is-invalid @enderror" 
-                                           name="linkedin_url" value="{{ old('linkedin_url', $contact->linkedin_url ?? '') }}">
+                                           name="linkedin_url" value="{{ old('linkedin_url', $linkedinUsername) }}"
+                                           placeholder="username">
                                 </div>
+                                <small class="form-text text-muted">Enter just your LinkedIn username (e.g., 'john-doe')</small>
                                 @error('linkedin_url')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -156,6 +178,20 @@
                                            name="x_username" value="{{ old('x_username', $contact->x_username ?? '') }}">
                                 </div>
                                 @error('x_username')
+                                    <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="facebook_url" class="form-label">Facebook Profile</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">facebook.com/</span>
+                                    <input id="facebook_url" type="text" class="form-control @error('facebook_url') is-invalid @enderror" 
+                                           name="facebook_url" value="{{ old('facebook_url', $contact->facebook_url ?? '') }}">
+                                </div>
+                                @error('facebook_url')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

@@ -25,6 +25,7 @@ class SiteContactDetail extends Model
         'github_username',
         'x_username',
         'linkedin_url',
+        'facebook_url',
         'location',
         'address',
         'bio',

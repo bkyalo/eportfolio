@@ -97,7 +97,7 @@
                                 @if($contact->phone)
                                     <li class="mb-2">
                                         <i class="fas fa-phone me-2 text-primary"></i>
-                                        <a href="tel:{{ $contact->phone }}" class="text-decoration-none">
+                                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', $contact->phone) }}" class="text-decoration-none">
                                             {{ $contact->phone }}
                                         </a>
                                     </li>
@@ -152,6 +152,17 @@
                                        data-bs-placement="top" 
                                        title="X (Twitter)">
                                         <i class="fab fa-twitter me-1"></i> X
+                                    </a>
+                                @endif
+                                
+                                @if($contact->facebook_url)
+                                    <a href="https://facebook.com/{{ $contact->facebook_url }}" 
+                                       target="_blank" 
+                                       class="btn btn-outline-primary btn-sm"
+                                       data-bs-toggle="tooltip" 
+                                       data-bs-placement="top" 
+                                       title="Facebook">
+                                        <i class="fab fa-facebook-f me-1"></i> Facebook
                                     </a>
                                 @endif
                             </div>

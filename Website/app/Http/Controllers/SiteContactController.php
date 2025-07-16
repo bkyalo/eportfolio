@@ -45,7 +45,8 @@ class SiteContactController extends Controller
             'job_title' => 'nullable|string|max:255',
             'github_username' => 'nullable|string|max:39',
             'x_username' => 'nullable|string|max:15',
-            'linkedin_url' => 'nullable|url|max:255',
+            'linkedin_url' => 'nullable|string|max:100',
+            'facebook_url' => 'nullable|string|max:100',
             'location' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
             'bio' => 'nullable|string|max:1000',
@@ -56,6 +57,18 @@ class SiteContactController extends Controller
             'contact_description' => 'nullable|string|max:1000',
             'profile_photo' => 'nullable|image|max:2048',
         ]);
+        
+        // Format LinkedIn URL if provided
+        if (!empty($validated['linkedin_url'])) {
+            $linkedinUsername = trim($validated['linkedin_url'], '/');
+            $validated['linkedin_url'] = 'https://linkedin.com/in/' . $linkedinUsername;
+        }
+        
+        // Format Facebook URL if provided
+        if (!empty($validated['facebook_url'])) {
+            $facebookUsername = trim($validated['facebook_url'], '/');
+            $validated['facebook_url'] = 'https://facebook.com/' . $facebookUsername;
+        }
 
         // Handle profile photo upload
         if ($request->hasFile('profile_photo')) {
