@@ -39,8 +39,11 @@ class WorkExperienceController extends Controller
         $validated = $this->validateRequest($request);
         
         // Handle current job
-        if (isset($validated['is_current'])) {
+        if ($request->has('is_current') && $request->is_current) {
             $validated['end_date'] = null;
+            $validated['is_current'] = true;
+        } else {
+            $validated['is_current'] = false;
         }
         
         WorkExperience::create($validated);
@@ -73,8 +76,9 @@ class WorkExperienceController extends Controller
         $validated = $this->validateRequest($request, $workExperience->id);
         
         // Handle current job
-        if (isset($validated['is_current'])) {
+        if ($request->has('is_current') && $request->is_current) {
             $validated['end_date'] = null;
+            $validated['is_current'] = true;
         } else {
             $validated['is_current'] = false;
         }

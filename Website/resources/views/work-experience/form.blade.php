@@ -78,11 +78,13 @@
                     <input class="form-check-input" 
                            type="checkbox" 
                            id="is_current" 
-                           name="is_current"
-                           {{ old('is_current', isset($workExperience) && $workExperience->is_current ? 'checked' : '') ? 'checked' : '' }}>
+                           name="is_current" 
+                           value="1"
+                           {{ old('is_current', isset($workExperience) && $workExperience->is_current ? '1' : '0') == '1' ? 'checked' : '' }}>
                     <label class="form-check-label" for="is_current">
-                        Current
+                        Current (I currently work here)
                     </label>
+                    <input type="hidden" name="is_current" value="0">
                 </div>
             </div>
             @error('end_date')
