@@ -10,6 +10,9 @@ class PortfolioController extends Controller
 {
     public function index()
     {
+        // Get the contact details
+        $contact = \App\Models\SiteContactDetail::first();
+        
         $projects = [
             [
                 'title' => 'E-Commerce Platform',
@@ -106,7 +109,7 @@ class PortfolioController extends Controller
             ]
         ];
         
-        return view('home', compact('projects', 'skills'));
+        return view('home', compact('projects', 'contact', 'skills'));
     }
 
     public function projects()

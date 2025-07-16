@@ -14,6 +14,12 @@
                             {{ session('success') }}
                         </div>
                     @endif
+                    
+                    @if(isset($contact) && $contact->contact_description)
+                        <div class="alert alert-info mb-4">
+                            <p class="mb-0">{{ $contact->contact_description }}</p>
+                        </div>
+                    @endif
 
                     <form method="POST" action="{{ route('contact.submit') }}" class="needs-validation" novalidate>
                         @csrf

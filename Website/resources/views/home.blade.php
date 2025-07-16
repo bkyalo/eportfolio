@@ -6,8 +6,12 @@
     <section id="home" class="hero py-5 py-lg-6">
         <div class="row align-items-center">
             <div class="col-lg-6 mb-5 mb-lg-0">
-                <h1 class="display-4 fw-bold mb-4">Ben Tito - <span class="text-primary">Electrical & Electronics Engineer</span> and <span class="text-primary">IT Consultant</span></h1>
-                <p class="lead mb-4">Bridging engineering and technology to create innovative solutions</p>
+                <h1 class="display-4 fw-bold mb-4">{{ $contact->name ?? 'Ben Tito' }} - <span class="text-primary">{{ $contact->job_title ?? 'Electrical & Electronics Engineer' }}</span>@if($contact->tags) <span class="text-primary">{{ $contact->job_title ? 'and' : '' }} {{ $contact->tags }}</span>@endif</h1>
+                @if($contact->home_description)
+                    <p class="lead mb-4">{{ $contact->home_description }}</p>
+                @else
+                    <p class="lead mb-4">Bridging engineering and technology to create innovative solutions</p>
+                @endif
                 <a href="#contacts" class="btn btn-primary btn-lg px-4 me-2">Contact me !!</a>
                 <a href="#works" class="btn btn-outline-light btn-lg px-4">View my work</a>
             </div>
@@ -28,12 +32,16 @@
     <section class="quote-section py-5 my-5">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
-                <blockquote class="anim-on-scroll position-relative py-4">
-                    <i class="fas fa-quote-left text-muted position-absolute" style="top: 0; left: -1.5rem; font-size: 3rem; opacity: 0.2;"></i>
-                    <p class="h4 fst-italic mb-4">"The only person you are destined to become is the person you decide to be"</p>
-                    <footer class="text-muted">— Ralph Waldo Emerson</footer>
-                    <i class="fas fa-quote-right text-muted position-absolute" style="bottom: 0; right: -1.5rem; font-size: 3rem; opacity: 0.2;"></i>
-                </blockquote>
+                @if($contact->saying)
+                    <blockquote class="anim-on-scroll position-relative py-4">
+                        <i class="fas fa-quote-left text-muted position-absolute" style="top: 0; left: -1.5rem; font-size: 3rem; opacity: 0.2;"></i>
+                        <p class="h4 fst-italic mb-4">"{{ $contact->saying }}"</p>
+                        @if($contact->saying_author)
+                            <footer class="text-muted">— {{ $contact->saying_author }}</footer>
+                        @endif
+                        <i class="fas fa-quote-right text-muted position-absolute" style="bottom: 0; right: -1.5rem; font-size: 3rem; opacity: 0.2;"></i>
+                    </blockquote>
+                @endif
             </div>
         </div>
     </section>

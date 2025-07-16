@@ -15,7 +15,8 @@ class ContactPageController extends Controller
      */
     public function show()
     {
-        return view('contact');
+        $contact = \App\Models\SiteContactDetail::first();
+        return view('contact', compact('contact'));
     }
 
     /**
