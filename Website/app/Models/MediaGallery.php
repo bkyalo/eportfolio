@@ -7,6 +7,13 @@ use Illuminate\Support\Str;
 
 class MediaGallery extends Model
 {
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'media_gallery';
+
     protected $fillable = [
         'title',
         'description',
