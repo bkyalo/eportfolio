@@ -17,6 +17,17 @@
         white-space: nowrap;
     }
     
+    .section-heading::first-letter {
+        color: var(--accent-purple);
+    }
+    
+    .greeting {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: var(--text-primary);
+    }
+    
     .dots {
         position: absolute;
         width: 60px;
@@ -208,9 +219,21 @@
             <div class="about-text">
                 <h2 class="section-heading">/about-me</h2>
                 <p class="subheading">Who am i?</p>
-                <p>Hello, I'm {{ $contact->name ?? 'Elias' }}!</p>
-                <p>I'm a self-taught front-end developer based in {{ $contact->location ?? 'Kyiv, Ukraine' }}. I can develop responsive websites from scratch and raise them into modern user-friendly web experiences.</p>
-                <p>Transforming my creativity and knowledge into websites has been my passion for over a year. I have been helping various clients to establish their presence online. I always strive to learn about the newest technologies and frameworks.</p>
+                @if(isset($contact))
+                    @if($contact->name)
+                        <p class="greeting">Hello, I'm {{ $contact->name }}!</p>
+                    @endif
+                    @if($contact->bio)
+                        {!! nl2br(e($contact->bio)) !!}
+                    @else
+                        <p>I'm a self-taught front-end developer based in {{ $contact->location ?? 'Kyiv, Ukraine' }}. I can develop responsive websites from scratch and raise them into modern user-friendly web experiences.</p>
+                        <p>Transforming my creativity and knowledge into websites has been my passion for over a year. I have been helping various clients to establish their presence online. I always strive to learn about the newest technologies and frameworks.</p>
+                    @endif
+                @else
+                    <p class="greeting">Hello, I'm Elias!</p>
+                    <p>I'm a self-taught front-end developer based in Kyiv, Ukraine. I can develop responsive websites from scratch and raise them into modern user-friendly web experiences.</p>
+                    <p>Transforming my creativity and knowledge into websites has been my passion for over a year. I have been helping various clients to establish their presence online. I always strive to learn about the newest technologies and frameworks.</p>
+                @endif
             </div>
             <div class="about-image">
                 <img src="{{ $contact->profile_photo_url ?? 'https://i.pinimg.com/564x/44/ae/53/44ae53578d32a353d953934d0815184b.jpg' }}" alt="{{ $contact->name ?? 'Elias' }}">

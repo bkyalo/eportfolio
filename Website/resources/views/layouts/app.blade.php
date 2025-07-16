@@ -48,7 +48,7 @@
     --accent-red: #da3633;
     
     /* Typography */
-    --font-primary: 'Inter', sans-serif;
+    --font-primary: 'Fira Code', monospace;
     --font-mono: 'Fira Code', monospace;
     
     /* Spacing */
@@ -84,6 +84,9 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     padding: 0 var(--space-md);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'calt' 1;
 }
 
 .container {
