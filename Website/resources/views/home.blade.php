@@ -2,6 +2,194 @@
 
 @section('content')
     <div class="container">
+        <style>
+            /* Projects Section */
+            .projects-section {
+                padding: 4rem 0;
+            }
+            .projects-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 3rem;
+            }
+            .projects-header .heading-container {
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+            }
+            .projects-header .line {
+                height: 2px;
+                width: 150px;
+                background-color: #a855f7;
+            }
+            .projects-header .view-all-link {
+                font-family: 'Fira Code', monospace;
+                color: #e0e0e0;
+                text-decoration: none;
+            }
+            .project-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 2rem;
+                margin-bottom: 8rem;
+            }
+            .project-card {
+                background-color: #212121;
+                border: 1px solid #4d4d4d;
+                border-radius: 8px;
+                overflow: hidden;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .project-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            }
+            .card-visual {
+                height: 250px;
+                padding: 1.5rem;
+                position: relative;
+            }
+            .card-info {
+                padding: 1.5rem;
+                border-top: 1px solid #4d4d4d;
+            }
+            .tech-stack {
+                font-family: 'Fira Code', monospace;
+                color: #a0a0a0;
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+            .card-info .title {
+                font-size: 1.5rem;
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+                color: #e0e0e0;
+            }
+            .card-info .description {
+                color: #a0a0a0;
+                margin-bottom: 1.5rem;
+            }
+            .card-actions {
+                display: flex;
+                gap: 1rem;
+            }
+            .action-button {
+                padding: 0.5rem 1rem;
+                border: 1px solid #4d4d4d;
+                border-radius: 4px;
+                text-decoration: none;
+                color: #a0a0a0;
+                font-family: 'Fira Code', monospace;
+                transition: all 0.3s ease;
+            }
+            .action-button:hover {
+                border-color: #a855f7;
+                color: #e0e0e0;
+            }
+            /* Card Specific Styles */
+            .card-1-visual { 
+                display: flex; 
+                justify-content: space-between; 
+                gap: 1rem; 
+                background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+                flex-direction: column;
+            }
+            .card-1-visual .logo { 
+                background-color: #e96d2d; 
+                color: #fff; 
+                font-size: 0.9rem; 
+                padding: 4px 8px; 
+                border-radius: 6px; 
+                display: inline-block; 
+                margin-bottom: 1rem; 
+                width: fit-content;
+            }
+            .card-1-visual .title { 
+                font-size: 2rem; 
+                line-height: 1; 
+                margin: 0;
+                color: #fff;
+            }
+            .card-1-visual .subtitle { 
+                font-size: 0.8rem; 
+                color: #a0a0a0; 
+                margin-top: 0.5rem; 
+            }
+            .feature-item { 
+                border: 1px solid #4d4d4d; 
+                border-radius: 8px; 
+                padding: 0.5rem; 
+                display: flex; 
+                align-items: center; 
+                gap: 0.5rem; 
+                font-size: 0.8rem; 
+                color: #a0a0a0; 
+                margin-bottom: 0.5rem; 
+                background-color: rgba(0, 0, 0, 0.2);
+            }
+            .feature-item svg { 
+                width: 16px; 
+                height: 16px; 
+                stroke: #a0a0a0; 
+            }
+            .card-2-visual { 
+                display: flex; 
+                justify-content: space-between; 
+                align-items: center; 
+                background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+                position: relative;
+                overflow: hidden;
+            }
+            .deco-line { 
+                position: absolute; 
+                background-color: #238636; 
+            }
+            .deco-line.top { 
+                top: 1.5rem; 
+                left: 1.5rem; 
+                width: 1px; 
+                height: 50px; 
+            }
+            .deco-line.left { 
+                top: 1.5rem; 
+                left: 1.5rem; 
+                width: 50px; 
+                height: 1px; 
+            }
+            .card-3-visual { 
+                display: grid; 
+                place-content: center; 
+                background: linear-gradient(135deg, #46178f 0%, #2e0f5e 100%);
+                height: 100%;
+            }
+            .card-3-visual h3 { 
+                font-size: 2.5rem; 
+                text-align: center; 
+                line-height: 1.2; 
+                margin: 0;
+                color: #fff;
+            }
+            /* Responsive adjustments */
+            @media (max-width: 1024px) {
+                .project-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+            @media (max-width: 640px) {
+                .project-grid {
+                    grid-template-columns: 1fr;
+                }
+                .projects-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 1rem;
+                }
+                .projects-header .line {
+                    width: 100px;
+                }
+            }
+        </style>
         <!-- Hero Section -->
     <section id="home" class="hero-section py-5 py-lg-6">
         <div class="container">
@@ -158,35 +346,84 @@
     </style>
 
     <!-- Quote Section -->
-    <section class="quote-section py-5 my-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                @if($contact->saying)
-                    <blockquote class="anim-on-scroll position-relative py-4">
-                        <i class="fas fa-quote-left text-muted position-absolute" style="top: 0; left: -1.5rem; font-size: 3rem; opacity: 0.2;"></i>
-                        <p class="h4 fst-italic mb-4">"{{ $contact->saying }}"</p>
-                        @if($contact->saying_author)
-                            <footer class="text-muted">— {{ $contact->saying_author }}</footer>
+    <section class="py-5 my-5 d-flex align-items-center" style="min-height: 50vh;">
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-lg-8">
+                    <div class="quote-container mx-auto text-center">
+                        @if(isset($contact) && $contact->saying)
+                            {{ $contact->saying }}
+                            @if($contact->saying_author)
+                                <div class="quote-author">- {{ $contact->saying_author }}</div>
+                            @endif
+                        @else
+                            <!-- Fallback quote if no contact data -->
+                            With great power comes great electricity bill
+                            <div class="quote-author">- Dr. Who</div>
                         @endif
-                        <i class="fas fa-quote-right text-muted position-absolute" style="bottom: 0; right: -1.5rem; font-size: 3rem; opacity: 0.2;"></i>
-                    </blockquote>
-                @endif
+                    </div>
+                </div>
             </div>
         </div>
+
+        <style>
+            .quote-container {
+                position: relative;
+                border: 1px solid #555;
+                padding: 2rem 3rem;
+                color: #e0e0e0;
+                font-size: 1.2rem;
+                max-width: 600px;
+                font-family: 'Fira Code', monospace;
+            }
+
+            .quote-container::before {
+                content: '“';
+                position: absolute;
+                top: -1.2rem;
+                left: 0.5rem;
+                font-size: 5rem;
+                font-family: serif;
+                color: #555;
+            }
+
+            .quote-container::after {
+                content: '”';
+                position: absolute;
+                bottom: -3.8rem;
+                right: 0.5rem;
+                font-size: 5rem;
+                font-family: serif;
+                color: #555;
+            }
+
+            .quote-author {
+                position: absolute;
+                bottom: -2rem;
+                right: 2rem;
+                border: 1px solid #555;
+                padding: 0.75rem 1.5rem;
+                background-color: #242429;
+                color: #e0e0e0;
+                font-size: 1rem;
+            }
+        </style>
+    </section>
     </section>
 
     <!-- Projects Section -->
-    <section id="works" class="projects-section">
+    <section id="projects" class="py-5 my-5">
         <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">My Portfolio</span>
-                <h2>Featured Projects</h2>
-                <p>Here are some of my recent projects that showcase my skills and expertise in various technologies.</p>
+            <div class="projects-header">
+                <div class="heading-container">
+                    <h2 class="section-heading">#projects</h2>
+                    <div class="line"></div>
+                </div>
+                <a href="{{ route('projects.index') }}" class="view-all-link">View all →</a>
             </div>
-            
-            <div class="mt-12">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    @foreach($projects as $index => $project)
+
+            <div class="project-grid">
+                @foreach($projects as $index => $project)
                         <div class="project-card-wrapper" style="--index: {{ $index }}">
                             <x-project-card 
                                 :title="$project['title']"
@@ -199,16 +436,12 @@
                             />
                         </div>
                     @endforeach
-                </div>
-            </div>
-            
-            <div class="view-more">
-                <a href="#" class="btn btn-outline-primary">
-                    View All Projects <i class="fas fa-arrow-right ms-2"></i>
-                </a>
             </div>
         </div>
     </section>
+
+    
+
     
     <!-- Skills Section -->
     <section id="skills" class="skills-section py-5 my-5 bg-dark rounded-4">
