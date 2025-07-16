@@ -10,12 +10,27 @@ use Illuminate\Support\Facades\Storage;
 class SiteContactController extends Controller
 {
     /**
-     * Show the form for editing the site contact details.
+     * Display the about myself details.
+     */
+    public function show()
+    {
+        $contact = SiteContactDetail::where('user_id', Auth::id())->first();
+        
+        if (!$contact) {
+            return redirect()->route('about-myself.edit')
+                ->with('info', 'Please set up your profile information first.');
+        }
+        
+        return view('about-myself.show', compact('contact'));
+    }
+    
+    /**
+     * Show the form for editing the about myself details.
      */
     public function edit()
     {
         $contact = SiteContactDetail::firstOrNew(['user_id' => Auth::id()]);
-        return view('contacts.edit', compact('contact'));
+        return view('about-myself.edit', compact('contact'));
     }
 
     /**
@@ -49,8 +64,8 @@ class SiteContactController extends Controller
             $validated
         );
 
-        return redirect()->route('dashboard')
-            ->with('success', 'Contact details updated successfully!');
+        return redirect()->route('about-myself.show')
+            ->with('success', 'Profile updated successfully!');
     }
 
     /**
@@ -64,7 +79,9 @@ class SiteContactController extends Controller
             Storage::disk('public')->delete($contact->profile_photo_path);
             $contact->update(['profile_photo_path' => null]);
             
-            return back()->with('success', 'Profile photo removed successfully.');
+            return back()
+                ->with('success', 'Profile photo removed successfully.')
+                ->with('active_tab', 'photo');
         }
         
         return back()->with('error', 'No profile photo found.');

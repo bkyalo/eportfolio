@@ -70,6 +70,31 @@
                 <a href="{{ route('publications.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('publications.*') ? 'active' : '' }}">
                     <i class="fas fa-book me-2"></i> Publications
                 </a>
+                
+                <a href="{{ route('about-myself.show') }}" class="list-group-item list-group-item-action {{ request()->routeIs('about-myself.*') ? 'active' : '' }}">
+                    <i class="fas fa-user me-2"></i> My Self
+                </a>
+                
+                <!-- Skills Dropdown -->
+                <div class="list-group-item p-0">
+                    <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center {{ request()->routeIs('skills.*') || request()->routeIs('skill-categories.*') ? 'active' : '' }}" 
+                       data-bs-toggle="collapse" href="#skillsSubmenu" role="button">
+                        <span><i class="fas fa-tools me-2"></i> Skills</span>
+                        <i class="fas fa-chevron-down small"></i>
+                    </a>
+                    <div class="collapse {{ request()->routeIs('skills.*') || request()->routeIs('skill-categories.*') ? 'show' : '' }}" id="skillsSubmenu">
+                        <div class="list-group list-group-flush bg-light">
+                            <a href="{{ route('skills.index') }}" 
+                               class="list-group-item list-group-item-action {{ request()->routeIs('skills.*') && !request()->routeIs('skill-categories.*') ? 'active' : '' }}">
+                                <i class="fas fa-list-ul me-2"></i> All Skills
+                            </a>
+                            <a href="{{ route('skill-categories.index') }}" 
+                               class="list-group-item list-group-item-action {{ request()->routeIs('skill-categories.*') ? 'active' : '' }}">
+                                <i class="fas fa-tags me-2"></i> Categories
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="border-top p-3 mt-auto">
                 <div class="d-flex align-items-center">

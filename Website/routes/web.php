@@ -24,14 +24,21 @@ Route::middleware('auth')->group(function () {
         ->middleware(['auth', 'verified'])
         ->name('dashboard');
     
-    // Contact Details Management
-    Route::prefix('contact')->name('contact.')->group(function () {
-        // Site Contact Details
-        Route::get('/details', [App\Http\Controllers\SiteContactController::class, 'edit'])->name('details.edit');
-        Route::put('/details', [App\Http\Controllers\SiteContactController::class, 'update'])->name('details.update');
-        Route::delete('/photo', [App\Http\Controllers\SiteContactController::class, 'destroyPhoto'])->name('photo.destroy');
+    // About Myself Management
+    Route::prefix('about-myself')->name('about-myself.')->group(function () {
+        // View About Myself
+        Route::get('/', [App\Http\Controllers\SiteContactController::class, 'show'])->name('show');
         
-        // Contact Submissions
+        // Edit About Myself
+        Route::middleware('auth')->group(function () {
+            Route::get('/edit', [App\Http\Controllers\SiteContactController::class, 'edit'])->name('edit');
+            Route::put('/', [App\Http\Controllers\SiteContactController::class, 'update'])->name('update');
+            Route::delete('/photo', [App\Http\Controllers\SiteContactController::class, 'destroyPhoto'])->name('photo.destroy');
+        });
+    });
+    
+    // Contact Submissions Management
+    Route::prefix('contact')->name('contact.')->group(function () {
         Route::get('/submissions', [App\Http\Controllers\ContactSubmissionController::class, 'index'])
             ->name('submissions.index');
         Route::get('/submissions/{submission}', [App\Http\Controllers\ContactSubmissionController::class, 'show'])
@@ -85,6 +92,28 @@ Route::middleware('auth')->group(function () {
         Route::get('/{project}', [App\Http\Controllers\ProjectController::class, 'show'])->name('show');
     });
     
+    // Skills Management Routes
+    Route::prefix('skills')->name('skills.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\SkillController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\Admin\SkillController::class, 'create'])->name('create');
+        Route::post('/', [App\Http\Controllers\Admin\SkillController::class, 'store'])->name('store');
+        Route::get('/{skill}', [App\Http\Controllers\Admin\SkillController::class, 'show'])->name('show');
+        Route::get('/{skill}/edit', [App\Http\Controllers\Admin\SkillController::class, 'edit'])->name('edit');
+        Route::put('/{skill}', [App\Http\Controllers\Admin\SkillController::class, 'update'])->name('update');
+        Route::delete('/{skill}', [App\Http\Controllers\Admin\SkillController::class, 'destroy'])->name('destroy');
+    });
+
+    // Skill Categories Management Routes
+    Route::prefix('skill-categories')->name('skill-categories.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\SkillCategoryController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\Admin\SkillCategoryController::class, 'create'])->name('create');
+        Route::post('/', [App\Http\Controllers\Admin\SkillCategoryController::class, 'store'])->name('store');
+        Route::get('/{skillCategory}', [App\Http\Controllers\Admin\SkillCategoryController::class, 'show'])->name('show');
+        Route::get('/{skillCategory}/edit', [App\Http\Controllers\Admin\SkillCategoryController::class, 'edit'])->name('edit');
+        Route::put('/{skillCategory}', [App\Http\Controllers\Admin\SkillCategoryController::class, 'update'])->name('update');
+        Route::delete('/{skillCategory}', [App\Http\Controllers\Admin\SkillCategoryController::class, 'destroy'])->name('destroy');
+    });
+
     // Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
