@@ -55,18 +55,19 @@
                 <p>Here are some of my recent projects that showcase my skills and expertise in various technologies.</p>
             </div>
             
-            <div class="projects-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; padding: 1rem 0;">
-                @foreach($projects as $project)
-                    <x-project-card 
-                        :title="$project['title']"
-                        :description="$project['description']"
-                        :techStack="$project['tech_stack']"
-                        :image="$project['image']"
-                        :liveUrl="$project['live_url']"
-                        :codeUrl="$project['code_url']"
-                        :category="$project['category']"
-                        class="anim-on-scroll"
-                    />
+            <div class="projects-grid mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach($projects as $index => $project)
+                    <div class="project-card-wrapper" style="--index: {{ $index }}">
+                        <x-project-card 
+                            :title="$project['title']"
+                            :description="$project['description']"
+                            :techStack="$project['tech_stack']"
+                            :image="$project['image']"
+                            :liveUrl="$project['live_url']"
+                            :codeUrl="$project['code_url']"
+                            :accent="$project['accent'] ?? 'purple'"
+                        />
+                    </div>
                 @endforeach
             </div>
             
