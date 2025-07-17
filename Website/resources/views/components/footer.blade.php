@@ -2,8 +2,9 @@
     $contact = \App\Models\SiteContactDetail::first();
 @endphp
 
-<div class="footer-wrapper">
-    <footer class="site-footer">
+<div class="footer-wrapper relative">
+    <div class="absolute top-0 left-0 right-0 h-px bg-gray-700"></div>
+    <footer class="site-footer pt-8">
         <div class="footer-top">
             <div class="footer-info">
                 <h3>{{ $contact->name ?? 'Ben Tito Kyalo' }} <span>{{ $contact->email ?? 'benkyalo075@gmail.com' }}</span></h3>
