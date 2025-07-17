@@ -36,33 +36,27 @@
             </div>
         </div>
     </section>
-    <section class="py-5 my-5 d-flex align-items-center" style="min-height: 50vh;">
+    <section class="section-container">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 col-lg-10">
-                    <div class="quote-container mx-auto text-center p-5 position-relative">
-                        @if(isset($contact) && $contact->saying)
-                            <div class="quote-text mb-4">{{ $contact->saying }}</div>
-                            @if($contact->saying_author)
-                                <div class="quote-author position-absolute bg-dark px-4 py-2" style="bottom: -1rem; right: 2rem; border: 1px solid #555;">- {{ $contact->saying_author }}</div>
-                            @endif
-                        @else
-                            <div class="quote-text mb-4">The only person you are destined to become is the person you decide to be</div>
-                            <div class="quote-author position-absolute bg-dark px-4 py-2" style="bottom: -1rem; right: 2rem; border: 1px solid #555;">- Ralph Waldo Emerson</div>
-                        @endif
-                    </div>
-                </div>
+            <div class="quote-container">
+                @if(isset($contact) && $contact->saying)
+                    <div class="quote-text">{{ $contact->saying }}</div>
+                    @if($contact->saying_author)
+                        <div class="quote-author">- {{ $contact->saying_author }}</div>
+                    @endif
+                @else
+                    <div class="quote-text">The only person you are destined to become is the person you decide to be</div>
+                    <div class="quote-author">- Ralph Waldo Emerson</div>
+                @endif
             </div>
         </div>
     </section>
-    <section id="projects" class="py-5 my-5">
+    <section id="projects" class="section-container">
         <div class="container">
-            <div class="projects-header">
-                <div class="heading-container">
-                    <h2 class="section-heading">#projects</h2>
-                    <div class="line"></div>
-                </div>
-                <a href="{{ route('projects.index') }}" class="view-all-link">View all →</a>
+            <div class="section-header">
+                <h2 class="section-title">#projects</h2>
+                <div class="section-divider"></div>
+                <a href="{{ route('projects.index') }}" class="section-link">View all →</a>
             </div>
 
             <div class="project-grid">
@@ -83,11 +77,12 @@
             </div>
         </div>
     </section>
-    <section class="skills-section" style="width: 100%; max-width: 1100px; margin: 0 auto; padding: 4rem 0;">
-        <div class="skills-header" style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2.5rem;">
-            <h2 style="font-size: 2.5rem; color: #FFFFFF; font-weight: 500; white-space: nowrap;">#skills</h2>
-            <div style="flex-grow: 1; height: 1px; background-color: #BD93F9;"></div>
-        </div>
+    <section id="skills" class="section-container">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">#skills</h2>
+                <div class="section-divider"></div>
+            </div>
 
         <div class="skills-body" style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem;">
             <div class="shapes-column" style="position: relative; min-height: 380px;">
@@ -158,38 +153,41 @@
         </style>
         </div>
     </section>
-    <section id="about-me" class="about-section py-5 my-5">
-        <div class="row align-items-center">
-            <div class="col-lg-6 mb-5 mb-lg-0">
-                <div class="pe-lg-5 anim-on-scroll">
-                    <div class="d-flex align-items-center mb-4">
-                        <h2 class="section-heading mb-0">#about-me</h2>
-                        <div class="flex-grow-1 ms-3" style="height: 2px; background: var(--bs-primary);"></div>
-                    </div>
-                    <h3 class="h2 fw-bold mb-4">Hello, I'm Ben Tito Kyalo!</h3>
-                    <div class="text-muted mb-4">
-                        <p>I'm an Electrical and Electronics Engineer and IT Consultant with a strong passion for Open Source Software and DevOps. Currently pursuing a BSc in Electrical and Electronics Engineering, I specialize in developing robust IT solutions and infrastructure.</p>
-                        <p>With expertise in server administration, database management, and full-stack development, I bridge the gap between hardware and software to create efficient, scalable solutions. My work focuses on implementing modern technologies to solve real-world problems.</p>
-                    </div>
-                    <a href="#" class="btn btn-outline-primary">
-                        Read more about me <i class="fas fa-arrow-right ms-2"></i>
-                    </a>
-                </div>
+    <section id="about-me" class="section-container">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">#about-me</h2>
+                <div class="section-divider"></div>
             </div>
-            <div class="col-lg-6">
-                <div class="position-relative anim-on-scroll" data-aos="fade-left">
-                    <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary bg-opacity-10 rounded-4" style="transform: rotate(3deg); z-index: -1;"></div>
-                    <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 rounded-4" style="transform: rotate(-2deg); z-index: -1;"></div>
-                    <img src="{{ asset('images/test-2.png') }}" alt="Ben Tito Kyalo" class="img-fluid rounded-4 shadow-lg position-relative" style="z-index: 1;">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="about-text">
+                        <h3 class="h2 fw-bold mb-4">Hello, I'm Ben Tito Kyalo!</h3>
+                        <div class="text-muted mb-4">
+                            <p>I'm an Electrical and Electronics Engineer and IT Consultant with a strong passion for Open Source Software and DevOps. Currently pursuing a BSc in Electrical and Electronics Engineering, I specialize in developing robust IT solutions and infrastructure.</p>
+                            <p>With expertise in server administration, database management, and full-stack development, I bridge the gap between hardware and software to create efficient, scalable solutions. My work focuses on implementing modern technologies to solve real-world problems.</p>
+                        </div>
+                        <a href="#" class="btn btn-outline-primary">
+                            Read more about me <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="position-relative anim-on-scroll" data-aos="fade-left">
+                        <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary bg-opacity-10 rounded-4" style="transform: rotate(3deg); z-index: -1;"></div>
+                        <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 rounded-4" style="transform: rotate(-2deg); z-index: -1;"></div>
+                            <img src="{{ $contact && $contact->profile_photo_path ? asset('storage/' . $contact->profile_photo_path) : asset('images/tiro.png') }}" alt="{{ $contact->name ?? 'Ben Tito Kyalo' }}" class="img-fluid rounded-4" style="width: 100%; height: auto; max-width: 100%;">
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-    <section id="contacts" class="contact-section py-5 my-5">
+    <section id="contacts" class="section-container">
         <div class="container">
-            <div class="flex items-center mb-8">
-                <h2 class="section-heading">#contacts</h2>
-                <div class="h-px bg-gray-700 flex-1 ml-4"></div>
+            <div class="section-header">
+                <h2 class="section-title">#contacts</h2>
+                <div class="section-divider"></div>
+            </div>
             </div>
             <p class="text-gray-400 mb-8">Get in touch with me</p>
         </div>
@@ -266,6 +264,78 @@
 --}}
 @push('styles')
 <style>
+    /* Section Styles */
+    .section-container {
+        width: 100%;
+        padding: 4rem 0;
+    }
+
+    .section-content {
+        width: 100%;
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        color: #FFFFFF;
+        font-weight: 500;
+        white-space: nowrap;
+        margin: 0;
+    }
+
+    .section-divider {
+        flex-grow: 1;
+        height: 1px;
+        background-color: #BD93F9;
+    }
+
+    .section-link {
+        color: #BD93F9;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: color 0.3s ease;
+    }
+
+    .section-link:hover {
+        color: #ffffff;
+    }
+
+    /* Quote Section */
+    .quote-container {
+        text-align: center;
+        padding: 3rem 2rem;
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .quote-text {
+        font-size: 1.5rem;
+        font-style: italic;
+        color: #e0e0e0;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+
+    .quote-author {
+        position: absolute;
+        background-color: #1a1a1a;
+        padding: 0.5rem 1.5rem;
+        border: 1px solid #555;
+        bottom: -1rem;
+        right: 2rem;
+        color: #BD93F9;
+    }
+
     /* Hero Section */
     .hero-section {
         color: #e0e0e0;

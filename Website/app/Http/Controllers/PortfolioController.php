@@ -12,7 +12,24 @@ class PortfolioController extends Controller
     public function index()
     {
         // Get the contact details
-        $contact = SiteContactDetail::first();
+        $contact = SiteContactDetail::first([
+            'name',
+            'email',
+            'phone',
+            'job_title',
+            'github_username',
+            'x_username',
+            'linkedin_url',
+            'facebook_url',
+            'location',
+            'bio',
+            'saying',
+            'saying_author',
+            'tags',
+            'home_description',
+            'contact_description',
+            'profile_photo_path'
+        ]);
         
         // Get projects from database - only include public projects
         $projects = Project::where('is_public', true)
