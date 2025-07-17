@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
     {{-- Link to your compiled CSS file --}}
     {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
@@ -133,15 +134,22 @@ a:hover {
     color: var(--accent-purple);
 }
 
-/* --- Header & Navigation --- */
+/* --- Header & Navigation/* Header Styles */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--space-md) 0;
-    margin-bottom: var(--space-xl);
+    padding: 1.5rem 0;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: rgba(13, 17, 23, 0.9);
+    backdrop-filter: blur(10px);
+    margin: 0 calc(-1 * var(--space-md));
+    padding: 1.5rem var(--space-md);
     border-bottom: 1px solid var(--border-color);
-    position: relative;
 }
 
 .header-logo {

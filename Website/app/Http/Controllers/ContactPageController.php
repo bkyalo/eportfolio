@@ -25,27 +25,32 @@ class ContactPageController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'first_name' => 'required|string|max:100',
-            'last_name' => 'required|string|max:100',
-            'email' => 'required|email|max:100',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:20',
-            'subject' => 'required|string|max:200',
-            'message' => 'required|string|max:2000',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string|max:5000',
         ]);
 
-        // Store in database
-        $contact = Contact::create([
-            'first_name' => $validated['first_name'],
-            'last_name' => $validated['last_name'],
-            'email_personal' => $validated['email'],
-            'phone_personal' => $validated['phone'] ?? null,
-            'notes' => "Subject: {$validated['subject']}\n\n{$validated['message']}",
-            'is_favorite' => false,
+        // Get the authenticated user if available
+        $userId = auth()->check() ? auth()->id() : null;
+
+        // Store in contact_submissions table
+        $submission = \App\Models\ContactSubmission::create([
+            'user_id' => $userId,
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'] ?? null,
+            'subject' => $validated['subject'],
+            'message' => $validated['message'],
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'is_read' => false,
         ]);
 
         // Send email notification (optional)
         try {
-            // Mail::to('your-email@example.com')->send(new ContactFormSubmitted($contact));
+            // Mail::to('your-email@example.com')->send(new ContactFormSubmitted($submission));
         } catch (\Exception $e) {
             \Log::error('Failed to send contact email: ' . $e->getMessage());
         }
