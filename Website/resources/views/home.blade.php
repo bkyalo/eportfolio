@@ -226,7 +226,7 @@
                 <div class="left-content">
                     <div class="contact-text">
                         <p>
-                            I'm interested in freelance opportunities. However, if you have other request or question, don't hesitate to contact me
+                            {{ $contact->contact_description ?? "I'm interested in freelance opportunities. However, if you have other request or question, don't hesitate to contact me" }}
                         </p>
                     </div>
                 </div>
