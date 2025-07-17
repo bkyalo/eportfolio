@@ -48,38 +48,44 @@ class PortfolioController extends Controller
             ];
         }
 
-        $skills = [
-            [
-                'title' => 'Frontend',
-                'icon' => 'fas fa-laptop-code',
-                'skills' => [
-                    ['name' => 'HTML/CSS', 'level' => 90],
-                    ['name' => 'JavaScript', 'level' => 85],
-                    ['name' => 'React', 'level' => 80],
-                    ['name' => 'Vue.js', 'level' => 75],
+        // Get skill categories with their active skills
+        $skillCategories = \App\Models\SkillCategory::with(['activeSkills' => function($query) {
+            $query->orderBy('order');
+        }])->orderBy('order')->get();
+        
+        // Format the skills data for the view
+        $skills = $skillCategories->map(function($category) {
+            $categoryData = [
+                'title' => $category->name,
+                'icon' => $category->icon ?? 'fa fa-code', // Default icon if not set
+                'skills' => []
+            ];
+            
+            // Map skills to the required format
+            if ($category->activeSkills->isNotEmpty()) {
+                $categoryData['skills'] = $category->activeSkills->map(function($skill) {
+                    return [
+                        'name' => $skill->name,
+                        'level' => $skill->proficiency ?? 0
+                    ];
+                })->toArray();
+            }
+            
+            return $categoryData;
+        })->toArray();
+        
+        // Ensure we have at least one category for the layout
+        if (empty($skills)) {
+            $skills = [
+                [
+                    'title' => 'Skills',
+                    'icon' => 'fa fa-code',
+                    'skills' => [
+                        ['name' => 'No skills found', 'level' => 0]
+                    ]
                 ]
-            ],
-            [
-                'title' => 'Backend',
-                'icon' => 'fas fa-server',
-                'skills' => [
-                    ['name' => 'PHP/Laravel', 'level' => 85],
-                    ['name' => 'Node.js', 'level' => 80],
-                    ['name' => 'Python', 'level' => 70],
-                    ['name' => 'SQL', 'level' => 75],
-                ]
-            ],
-            [
-                'title' => 'DevOps & Tools',
-                'icon' => 'fas fa-code-branch',
-                'tags' => ['Docker', 'Git', 'AWS', 'CI/CD', 'Linux', 'Bash']
-            ],
-            [
-                'title' => 'Engineering',
-                'icon' => 'fas fa-microchip',
-                'tags' => ['Embedded Systems', 'IoT', 'PCB Design', 'Circuit Analysis']
-            ]
-        ];
+            ];
+        }
         
         return view('home', compact('projects', 'contact', 'skills'));
     }

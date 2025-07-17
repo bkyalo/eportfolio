@@ -83,33 +83,79 @@
             </div>
         </div>
     </section>
-    <section class="skills-section">
-        <h2 class="section-heading">#skills</h2>
-        <div class="skills-grid">
-            @forelse($skills as $category)
-                <div class="skill-category">
-                    <h3>{{ $category['title'] }}</h3>
-                    <ul>
-                        @if(isset($category['skills']))
-                            @foreach($category['skills'] as $skill)
-                                <li>{{ $skill['name'] }}</li>
-                            @endforeach
-                        @elseif(isset($category['tags']))
-                            @foreach($category['tags'] as $tag)
-                                <li>{{ $tag }}</li>
-                            @endforeach
-                        @endif
-                    </ul>
-                </div>
-            @empty
-                <div class="skill-category">
-                    <h3>Skills</h3>
-                    <li>No skills data available.</li>
-                </div>
-            @endforelse
+    <section class="skills-section" style="width: 100%; max-width: 1100px; margin: 0 auto; padding: 4rem 0;">
+        <div class="skills-header" style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2.5rem;">
+            <h2 style="font-size: 2.5rem; color: #FFFFFF; font-weight: 500; white-space: nowrap;">#skills</h2>
+            <div style="flex-grow: 1; height: 1px; background-color: #BD93F9;"></div>
         </div>
 
-        <div class="shape" style="top: 150px; right: -50px; width: 80px; height: 80px;"></div>
+        <div class="skills-body" style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem;">
+            <div class="shapes-column" style="position: relative; min-height: 380px;">
+                <div style="position: absolute; width: 75px; height: 75px; background-image: radial-gradient(circle, #44475a 2px, transparent 2px); background-size: 15px 15px; top: 20px; left: 20px;"></div>
+                <div style="position: absolute; width: 75px; height: 75px; background-image: radial-gradient(circle, #44475a 2px, transparent 2px); background-size: 15px 15px; top: 220px; left: 150px;"></div>
+                <div style="position: absolute; top: -20px; left: 220px; width: 80px; height: 80px; border: 1px solid #6272A4;"></div>
+                <div style="position: absolute; top: 250px; left: 300px; width: 60px; height: 60px; border: 1px solid #6272A4;"></div>
+                <div class="purple-group" style="position: absolute; top: 170px; left: 20px; width: 120px; height: 120px;">
+                    <div style="width: 90px; height: 90px; position: absolute; border: 1px solid #BD93F9;"></div>
+                    <div style="width: 90px; height: 90px; position: absolute; top: 20px; left: 20px; border: 1px solid #BD93F9;"></div>
+                </div>
+            </div>
+
+            <div class="skills-grid-wrapper" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;">
+                @php
+                    // Initialize columns (right to left: 2, 1, 0)
+                    $columns = [[], [], []];
+                    
+                    // Distribute categories:
+                    // First 2 categories in right column (index 2)
+                    // Next 2 categories in middle column (index 1)
+                    // Remaining categories in left column (index 0)
+                    foreach ($skills as $index => $category) {
+                        if ($index < 2) {
+                            $columns[2][] = $category;  // Right column (first 2 categories)
+                        } elseif ($index < 4) {
+                            $columns[1][] = $category;  // Middle column (next 2 categories)
+                        } else {
+                            $columns[0][] = $category;  // Left column (remaining categories)
+                        }
+                    }
+                @endphp
+
+                @foreach($columns as $columnIndex => $columnCategories)
+                    <div class="nested-box" style="display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-end;">
+                        @foreach($columnCategories as $category)
+                            <div class="skill-category" style="border: 1px solid #6272A4; padding: 0.5rem 0.75rem; height: fit-content; width: 100%;">
+                                <h3 style="position: relative; font-size: 0.9rem; color: #FFFFFF; font-weight: 500; margin: 0 0 0.5rem 0; padding-bottom: 0.25rem; border-bottom: 1px solid #6272A4; width: 100%; text-align: right;">
+                                    <i class="{{ $category['icon'] }}"></i> {{ $category['title'] }}
+                                </h3>
+                                @if(!empty($category['skills']))
+                                    <div class="skill-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; color: #b0b0b0; line-height: 1.3; font-size: 0.9rem; width: 100%;">
+                                        @foreach($category['skills'] as $skill)
+                                            <div style="margin: 0.15rem 0; text-align: right;">{{ $skill['name'] }}</div>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <style>
+            @media (max-width: 900px) {
+                .skills-body {
+                    grid-template-columns: 1fr !important;
+                }
+                .shapes-column {
+                    display: none !important;
+                }
+                .skills-grid-wrapper {
+                    grid-template-columns: 1fr !important;
+                    gap: 1rem !important;
+                }
+            }
+        </style>
         </div>
     </section>
     <section id="about-me" class="about-section py-5 my-5">
