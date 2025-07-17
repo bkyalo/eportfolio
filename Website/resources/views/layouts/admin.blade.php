@@ -45,14 +45,14 @@
                         <span><i class="fas fa-project-diagram me-2"></i> Projects</span>
                         <i class="fas fa-chevron-down small"></i>
                     </a>
-                    <div class="collapse {{ request()->routeIs('projects.*') ? 'show' : '' }}" id="projectsSubmenu">
+                    <div class="collapse {{ request()->routeIs('admin.projects.*') ? 'show' : '' }}" id="projectsSubmenu">
                         <div class="list-group list-group-flush bg-light">
-                            <a href="{{ route('projects.index') }}" 
-                               class="list-group-item list-group-item-action {{ request()->routeIs('projects.index') ? 'active' : '' }}">
+                            <a href="{{ route('admin.projects.index') }}" 
+                               class="list-group-item list-group-item-action {{ request()->routeIs('admin.projects.index') ? 'active' : '' }}">
                                 <i class="fas fa-list-ul me-2"></i> All Projects
                             </a>
-                            <a href="{{ route('projects.create') }}" 
-                               class="list-group-item list-group-item-action {{ request()->routeIs('projects.create') ? 'active' : '' }}">
+                            <a href="{{ route('admin.projects.create') }}" 
+                               class="list-group-item list-group-item-action {{ request()->routeIs('admin.projects.create') ? 'active' : '' }}">
                                 <i class="fas fa-plus-circle me-2"></i> Add New Project
                             </a>
                         </div>

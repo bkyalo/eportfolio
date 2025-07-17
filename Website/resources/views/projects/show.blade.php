@@ -25,10 +25,10 @@
             </div>
         </div>
         <div class="d-flex gap-2">
-            <a href="{{ route('projects.edit', $project) }}" class="btn btn-primary">
+            <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-primary">
                 <i class="fas fa-edit me-1"></i> Edit Project
             </a>
-            <a href="{{ route('projects.index') }}" class="btn btn-outline-secondary">
+            <a href="{{ route('admin.projects.index') }}" class="btn btn-outline-secondary">
                 <i class="fas fa-arrow-left me-1"></i> Back to Projects
             </a>
         </div>
@@ -131,20 +131,20 @@
     <!-- Action Buttons -->
     <div class="d-flex justify-content-between">
         <div>
-            <a href="{{ route('projects.index') }}" class="btn btn-outline-secondary">
+            <a href="{{ route('admin.projects.index') }}" class="btn btn-outline-secondary">
                 <i class="fas fa-arrow-left me-1"></i> Back to Projects
             </a>
         </div>
-        <div class="d-flex gap-2">
-            <a href="{{ route('projects.edit', $project) }}" class="btn btn-primary">
+        <div>
+            <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-primary">
                 <i class="fas fa-edit me-1"></i> Edit Project
             </a>
-            <form id="delete-form" action="{{ route('projects.destroy', $project) }}" method="POST" class="d-inline">
+            <form id="delete-form" action="{{ route('admin.projects.destroy', $project) }}" method="POST" class="d-inline">
                 @csrf
                 @method('DELETE')
                 <button type="button" 
                         onclick="if(confirm('Are you sure you want to delete this project? This action cannot be undone.')) { this.form.submit(); }" 
-                        class="btn btn-outline-danger">
+                        class="btn btn-outline-danger ms-2">
                     <i class="fas fa-trash me-1"></i> Delete Project
                 </button>
             </form>

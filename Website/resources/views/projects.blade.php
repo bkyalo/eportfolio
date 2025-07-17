@@ -14,15 +14,15 @@
 
         <!-- Project Filters -->
         <div class="mb-8 flex flex-wrap justify-center gap-4">
-            <a href="{{ route('projects.public.index') }}" 
+            <a href="{{ route('projects.index') }}" 
                class="px-4 py-2 rounded-full text-sm font-medium {{ !request('filter') ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600 hover:bg-gray-50' }}">
                 All Projects
             </a>
-            <a href="{{ route('projects.public.index', ['filter' => 'featured']) }}" 
+            <a href="{{ route('projects.index', ['filter' => 'featured']) }}" 
                class="px-4 py-2 rounded-full text-sm font-medium {{ request('filter') === 'featured' ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600 hover:bg-gray-50' }}">
                 Featured
             </a>
-            <a href="{{ route('projects.public.index', ['filter' => 'small']) }}" 
+            <a href="{{ route('projects.index', ['filter' => 'small']) }}" 
                class="px-4 py-2 rounded-full text-sm font-medium {{ request('filter') === 'small' ? 'bg-blue-100 text-blue-800' : 'bg-white text-gray-600 hover:bg-gray-50' }}">
                 Small Projects
             </a>
@@ -51,7 +51,7 @@
                                         {{ $project->created_at->format('M Y') }}
                                     </span>
                                 </div>
-                                <a href="{{ route('projects.public.show', $project) }}" class="block mt-2">
+                                <a href="{{ route('projects.show', $project) }}" class="block mt-2">
                                     <h3 class="text-xl font-semibold text-gray-900">{{ $project->title }}</h3>
                                     <p class="mt-3 text-base text-gray-500 line-clamp-3">
                                         {{ $project->brief_description }}
@@ -104,7 +104,7 @@
                 </p>
                 @auth
                     <div class="mt-6
-                    <a href="{{ route('projects.create') }}" 
+                    <a href="{{ route('admin.projects.create') }}" 
                        class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />

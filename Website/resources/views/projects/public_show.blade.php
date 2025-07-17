@@ -127,9 +127,9 @@
                         
                         @auth
                             <div class="mt-8 pt-6 border-t border-gray-200">
-                                <a href="{{ route('projects.edit', $project) }}" 
+                                <a href="{{ route('admin.projects.edit', $project) }}" 
                                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                    <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                         <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                                     </svg>
                                     Edit Project
@@ -163,7 +163,7 @@
                                     {{ $relatedProject->brief_description }}
                                 </p>
                                 <div class="mt-4">
-                                    <a href="{{ route('projects.public.show', $relatedProject) }}" class="text-sm font-medium text-blue-600 hover:text-blue-500">
+                                    <a href="{{ route('projects.show', $relatedProject) }}" class="text-sm font-medium text-blue-600 hover:text-blue-500">
                                         View project<span aria-hidden="true"> &rarr;</span>
                                     </a>
                                 </div>

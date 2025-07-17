@@ -7,7 +7,7 @@
     <!-- Page Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">My Projects</h1>
-        <a href="{{ route('projects.create') }}" class="btn btn-primary">
+        <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">
             <i class="fas fa-plus me-2"></i> Add New Project
         </a>
     </div>
@@ -69,7 +69,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <form action="{{ route('projects.toggle-publish', $project) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('admin.projects.toggle-publish', $project) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('PUT')
                                         <button type="submit" class="btn btn-sm {{ $project->is_public ? 'btn-success' : 'btn-outline-secondary' }}" 
@@ -105,17 +105,17 @@
                                 </td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <a href="{{ route('projects.public.show', $project) }}" 
+                                        <a href="{{ route('admin.projects.show', $project) }}" 
                                            class="btn btn-sm btn-outline-secondary"
                                            data-bs-toggle="tooltip" data-bs-placement="top" title="View">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="{{ route('projects.edit', $project) }}" 
+                                        <a href="{{ route('admin.projects.edit', $project) }}" 
                                            class="btn btn-sm btn-outline-primary"
                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <form action="{{ route('projects.destroy', $project) }}" method="POST" 
+                                        <form action="{{ route('admin.projects.destroy', $project) }}" method="POST" 
                                               class="d-inline" 
                                               onsubmit="return confirm('Are you sure you want to delete this project?');">
                                             @csrf
@@ -135,8 +135,8 @@
                                         <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
                                         <h5 class="mb-2">No projects found</h5>
                                         <p class="text-muted mb-3">Get started by creating a new project</p>
-                                        <a href="{{ route('projects.create') }}" class="btn btn-primary">
-                                            <i class="fas fa-plus me-2"></i> Create Project
+                                        <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">
+                                            <i class="fas fa-plus me-2"></i> Create Your First Project
                                         </a>
                                     </div>
                                 </td>

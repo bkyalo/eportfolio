@@ -91,8 +91,8 @@ class ProjectController extends Controller
 
         $project->save();
 
-        return redirect()->route('projects.index')
-                         ->with('success', 'Project created successfully.');
+        return redirect()->route('admin.projects.index')
+                         ->with('success', 'Project created successfully!');
     }
 
     /**
@@ -186,8 +186,8 @@ class ProjectController extends Controller
 
         $project->save();
 
-        return redirect()->route('projects.index')
-                         ->with('success', 'Project updated successfully.');
+        return redirect()->route('admin.projects.index')
+                         ->with('success', 'Project updated successfully!');
     }
 
     /**
@@ -205,8 +205,8 @@ class ProjectController extends Controller
         
         $project->delete();
 
-        return redirect()->route('projects.index')
-                         ->with('success', 'Project deleted successfully.');
+        return redirect()->route('admin.projects.index')
+                         ->with('success', 'Project deleted successfully!');
     }
 
     /**

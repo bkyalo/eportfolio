@@ -55,7 +55,7 @@
             </nav>
         </div>
         <div>
-            <a href="{{ route('projects.create') }}" class="btn btn-primary">
+            <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus me-2"></i> New Project
             </a>
         </div>
@@ -217,7 +217,7 @@
             <div class="card border-0 shadow-sm h-100">
                 <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Recent Projects</h5>
-                    <a href="{{ route('projects.index') }}" class="btn btn-sm btn-outline-primary">
+                    <a href="{{ route('admin.projects.index') }}" class="btn btn-sm btn-outline-primary">
                         View All <i class="fas fa-arrow-right ms-1"></i>
                     </a>
                 </div>
@@ -258,106 +258,96 @@
                                         </td>
                                         <td>
                                             <span data-bs-toggle="tooltip" title="{{ $project->updated_at->format('M d, Y H:i') }}">
-                                                {{ $project->updated_at->diffForHumans() }}
-                                            </span>
-                                        </td>
-                                        <td class="text-end pe-4">
-                                            <div class="btn-group">
-                                                <a href="{{ route('projects.edit', $project) }}" 
-                                                   class="btn btn-sm btn-outline-secondary"
-                                                   data-bs-toggle="tooltip" 
-                                                   title="Edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <a href="{{ route('projects.show', $project) }}" 
-                                                   class="btn btn-sm btn-outline-primary"
-                                                   data-bs-toggle="tooltip" 
-                                                   title="View">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
                                             </div>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="4" class="text-center py-4">
-                                            <div class="text-muted">No projects found. <a href="{{ route('projects.create') }}">Create your first project</a></div>
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Recent Contact Submissions -->
-        <div class="col-lg-4">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Recent Messages</h5>
-                    <a href="{{ route('contact.submissions.index') }}" class="btn btn-sm btn-outline-primary">
-                        View All <i class="fas fa-arrow-right ms-1"></i>
-                    </a>
-                </div>
-                <div class="card-body p-0">
-                    @if($recentSubmissions->count() > 0)
-                        <div class="list-group list-group-flush">
-                            @foreach($recentSubmissions as $submission)
-                                <a href="{{ route('contact.submissions.show', $submission) }}" class="list-group-item list-group-item-action recent-item">
-                                    <div class="d-flex justify-content-between align-items-start">
-                                        <div>
-                                            <h6 class="mb-1">{{ $submission->name }}</h6>
-                                            <p class="text-muted small mb-0">{{ Str::limit($submission->message, 60) }}</p>
                                         </div>
-                                        <small class="text-muted" data-bs-toggle="tooltip" title="{{ $submission->created_at->format('M d, Y H:i') }}">
-                                            {{ $submission->created_at->diffForHumans() }}
-                                        </small>
-                                    </div>
-                                </a>
-                            @endforeach
-                        </div>
-                    @else
-                        <div class="text-center p-4">
-                            <div class="text-muted mb-3">
-                                <i class="fas fa-inbox fa-3x opacity-25"></i>
-                            </div>
-                            <p class="mb-0">No messages yet</p>
-                        </div>
-                    @endif
+                                    </td>
+                                    <td>
+                                        @if($project->status === 'complete')
+                                            <span class="badge bg-success">Complete</span>
+                                        @else
+                                            <span class="badge bg-warning">In Progress</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <span data-bs-toggle="tooltip" title="{{ $project->updated_at->format('M d, Y H:i') }}">
+                                            {{ $project->updated_at->diffForHumans() }}
+                                        </span>
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <div class="btn-group">
+                                            <a href="{{ route('admin.projects.edit', $project) }}" 
+                                               class="btn btn-sm btn-outline-primary"
+                                               data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="{{ route('admin.projects.show', $project) }}" 
+                                               class="btn btn-sm btn-outline-primary"
+                                               data-bs-toggle="tooltip" 
+                                               title="View">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="text-center py-4">
+                                        <div class="text-muted">No projects found. <a href="{{ route('admin.projects.create') }}">Create your first project</a></div>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Quick Stats -->
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm h-100">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="bg-success bg-opacity-10 p-3 rounded-3 me-3">
-                            <i class="fas fa-list-ul text-success"></i>
-                        </div>
-                        <div>
-                            <h5 class="card-title mb-1">Manage Projects</h5>
-                            <p class="card-text text-muted small">View and manage all your portfolio projects</p>
-                        </div>
+    
+    <!-- Recent Contact Submissions -->
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Recent Messages</h5>
+                <a href="{{ route('contact.submissions.index') }}" class="btn btn-sm btn-outline-primary">
+                    View All <i class="fas fa-arrow-right ms-1"></i>
+                </a>
+            </div>
+            <div class="card-body p-0">
+                @if($recentSubmissions->count() > 0)
+                    <div class="list-group list-group-flush">
+                        @foreach($recentSubmissions as $submission)
+                            <a href="{{ route('contact.submissions.show', $submission) }}" class="list-group-item list-group-item-action recent-item">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="mb-1">{{ $submission->name }}</h6>
+                                        <p class="text-muted small mb-0">{{ Str::limit($submission->message, 60) }}</p>
+                                    </div>
+                                    <small class="text-muted" data-bs-toggle="tooltip" title="{{ $submission->created_at->format('M d, Y H:i') }}">
+                                        {{ $submission->created_at->diffForHumans() }}
+                                    </small>
+                                </div>
+                            </a>
+                        @endforeach
                     </div>
-                </div>
-                <div class="card-footer bg-transparent border-top-0 pt-0">
-                    <a href="{{ route('projects.public.index') }}" class="btn btn-sm btn-outline-success">
-                        Manage Projects <i class="fas fa-arrow-right ms-1 small"></i>
-                    </a>
-                </div>
+                @else
+                    <div class="text-center p-4">
+                        <div class="text-muted mb-3">
+                            <i class="fas fa-inbox fa-3x opacity-25"></i>
+                        </div>
+                        <p class="mb-0">No messages yet</p>
+                    </div>
+                @endif
             </div>
         </div>
-        
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm h-100">
-                <div class="card-body">
-                    <div class="d-flex">
+    </div>
+</div>
+
+<!-- Quick Stats -->
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex">
                         <div class="bg-purple bg-opacity-10 p-3 rounded-3 me-3">
                             <i class="fas fa-cog text-purple"></i>
                         </div>
@@ -368,8 +358,8 @@
                     </div>
                 </div>
                 <div class="card-footer bg-transparent border-top-0 pt-0">
-                    <a href="#" class="btn btn-sm btn-outline-purple">
-                        Configure <i class="fas fa-arrow-right ms-1 small"></i>
+                    <a href="{{ route('projects.index') }}" class="btn btn-sm btn-outline-success">
+                        <i class="fas fa-external-link-alt me-1"></i> View Public Portfolio
                     </a>
                 </div>
             </div>

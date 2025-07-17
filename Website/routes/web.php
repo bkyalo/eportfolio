@@ -127,22 +127,19 @@ Route::middleware('auth')->group(function () {
         Route::post('/reorder', [FunFactController::class, 'reorder'])->name('reorder');
     });
     
-    // Projects Routes
-    Route::prefix('projects')->name('projects.')->group(function () {
-        // Public view
-        Route::get('/', [App\Http\Controllers\ProjectController::class, 'index'])->name('index');
-        
-        // Admin CRUD (protected by auth middleware)
+    // Admin Projects Routes
+    Route::prefix('admin-projects')->name('admin.projects.')->group(function () {
+        // Admin view (protected by auth middleware)
         Route::middleware(['auth'])->group(function () {
+            Route::get('/', [App\Http\Controllers\ProjectController::class, 'index'])->name('index');
             Route::get('/create', [App\Http\Controllers\ProjectController::class, 'create'])->name('create');
             Route::post('/', [App\Http\Controllers\ProjectController::class, 'store'])->name('store');
+            Route::get('/{project}', [App\Http\Controllers\ProjectController::class, 'show'])->name('show');
             Route::get('/{project}/edit', [App\Http\Controllers\ProjectController::class, 'edit'])->name('edit');
             Route::put('/{project}', [App\Http\Controllers\ProjectController::class, 'update'])->name('update');
             Route::delete('/{project}', [App\Http\Controllers\ProjectController::class, 'destroy'])->name('destroy');
+            Route::put('{project}/toggle-publish', [ProjectController::class, 'togglePublish'])->name('toggle-publish');
         });
-        
-        // Public show route (must be last to avoid conflicts)
-        Route::get('/{project}', [App\Http\Controllers\ProjectController::class, 'show'])->name('show');
     });
     
     // Skills Management Routes
@@ -178,12 +175,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
-    // Project Routes
-    Route::resource('projects', ProjectController::class);
-    Route::put('projects/{project}/toggle-publish', [ProjectController::class, 'togglePublish'])->name('projects.toggle-publish');
-    
-    // Public project view (separate from resource to avoid auth middleware)
-    Route::get('projects/{project}', [ProjectController::class, 'show'])
+    // Public project routes (kept for backward compatibility)
+    Route::get('projects', [\App\Http\Controllers\PortfolioController::class, 'projects'])
+         ->name('projects.index');
+    Route::get('projects/{project:slug}', [ProjectController::class, 'show'])
          ->name('projects.show');
          
     // Publication Routes

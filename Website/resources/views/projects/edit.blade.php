@@ -8,7 +8,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Edit Project: {{ $project->title }}</h1>
         <div>
-            <form id="delete-form" action="{{ route('projects.destroy', $project) }}" method="POST" class="d-inline">
+            <form id="delete-form" action="{{ route('admin.projects.destroy', $project) }}" method="POST" class="d-inline">
                 @csrf
                 @method('DELETE')
                 <button type="button" 
@@ -17,7 +17,7 @@
                     <i class="fas fa-trash me-1"></i> Delete Project
                 </button>
             </form>
-            <a href="{{ route('projects.index') }}" class="btn btn-outline-secondary ms-2">
+            <a href="{{ route('admin.projects.index') }}" class="btn btn-outline-secondary ms-2">
                 <i class="fas fa-arrow-left me-1"></i> Back to Projects
             </a>
         </div>
@@ -25,7 +25,7 @@
 
     <div class="card border-0 shadow-sm">
         <div class="card-body">
-            <form action="{{ route('projects.update', $project) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.projects.update', $project) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 
@@ -182,7 +182,7 @@
                 
                 <!-- Form Actions -->
                 <div class="d-flex justify-content-between align-items-center pt-3 border-top">
-                    <a href="{{ route('projects.index') }}" class="btn btn-outline-secondary">
+                    <a href="{{ route('admin.projects.index') }}" class="btn btn-outline-secondary">
                         <i class="fas fa-times me-1"></i> Cancel
                     </a>
                     <button type="submit" class="btn btn-primary">

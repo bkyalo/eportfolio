@@ -8,7 +8,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Add New Project</h1>
         <div>
-            <a href="{{ route('projects.index') }}" class="btn btn-outline-secondary me-2">
+            <a href="{{ route('admin.projects.index') }}" class="btn btn-outline-secondary me-2">
                 <i class="fas fa-arrow-left me-1"></i> Back to Projects
             </a>
         </div>
@@ -16,7 +16,7 @@
 
     <div class="card border-0 shadow-sm">
         <div class="card-body">
-            <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 
                 <div class="row">
@@ -155,7 +155,7 @@
                 
                 <!-- Form Actions -->
                 <div class="d-flex justify-content-end gap-2 pt-3 border-top">
-                    <a href="{{ route('projects.index') }}" class="btn btn-outline-secondary">
+                    <a href="{{ route('admin.projects.index') }}" class="btn btn-outline-secondary">
                         <i class="fas fa-times me-1"></i> Cancel
                     </a>
                     <button type="submit" class="btn btn-primary">
