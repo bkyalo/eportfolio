@@ -27,6 +27,7 @@
                         <tr>
                             <th class="ps-4">Project</th>
                             <th>Status</th>
+                            <th>Visibility</th>
                             <th>Stack</th>
                             <th>Links</th>
                             <th class="text-end pe-4">Actions</th>
@@ -68,6 +69,18 @@
                                     </span>
                                 </td>
                                 <td>
+                                    <form action="{{ route('projects.toggle-publish', $project) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="btn btn-sm {{ $project->is_public ? 'btn-success' : 'btn-outline-secondary' }}" 
+                                                data-bs-toggle="tooltip" 
+                                                title="{{ $project->is_public ? 'Published - Click to unpublish' : 'Unpublished - Click to publish' }}">
+                                            <i class="fas {{ $project->is_public ? 'fa-eye' : 'fa-eye-slash' }}"></i>
+                                            {{ $project->is_public ? 'Published' : 'Draft' }}
+                                        </button>
+                                    </form>
+                                </td>
+                                <td>
                                     <div class="d-flex flex-wrap gap-1" style="max-width: 150px;">
                                         @foreach(explode(',', $project->stack) as $tech)
                                             <span class="badge bg-light text-dark">{{ trim($tech) }}</span>
@@ -90,7 +103,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <td class="text-end pe-4">
+                                <td>
                                     <div class="btn-group" role="group">
                                         <a href="{{ route('projects.public.show', $project) }}" 
                                            class="btn btn-sm btn-outline-secondary"

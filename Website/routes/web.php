@@ -179,7 +179,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
     // Project Routes
-    Route::resource('projects', ProjectController::class)->except(['show']);
+    Route::resource('projects', ProjectController::class);
+    Route::put('projects/{project}/toggle-publish', [ProjectController::class, 'togglePublish'])->name('projects.toggle-publish');
     
     // Public project view (separate from resource to avoid auth middleware)
     Route::get('projects/{project}', [ProjectController::class, 'show'])

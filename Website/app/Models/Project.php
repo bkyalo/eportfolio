@@ -21,11 +21,13 @@ class Project extends Model
         'live_url',
         'status',
         'is_small_project',
+        'is_public',
     ];
 
     protected $casts = [
         'is_live' => 'boolean',
         'is_small_project' => 'boolean',
+        'is_public' => 'boolean',
     ];
 
     /**

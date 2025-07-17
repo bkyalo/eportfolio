@@ -14,8 +14,9 @@ class PortfolioController extends Controller
         // Get the contact details
         $contact = SiteContactDetail::first();
         
-        // Get projects from database
+        // Get projects from database - only include public projects that are live
         $projects = Project::where('is_live', true)
+            ->where('is_public', true)
             ->orderBy('created_at', 'desc')
             ->get()
             ->map(function($project) {
@@ -85,19 +86,39 @@ class PortfolioController extends Controller
 
     public function projects()
     {
-        $query = Project::where('status', 'complete')
-                      ->latest();
+        $query = Project::where('is_live', true)
+                      ->where('is_public', true);
         
-        // Apply filters
-        if (request()->has('filter')) {
-            switch (request('filter')) {
-                case 'featured':
-                    $query->where('is_small_project', false);
-                    break;
-                case 'small':
-                    $query->where('is_small_project', true);
-                    break;
-            }
+        // Handle search
+        if (request()->has('search')) {
+            $search = request('search');
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('stack', 'like', "%{$search}%");
+            });
+        }
+        
+        // Handle category filter
+        if (request()->has('category')) {
+            $category = request('category');
+            // Assuming you have a category field in your projects table
+            // If not, you might need to adjust this based on your actual database structure
+            $query->where('category', $category);
+        }
+        
+        // Handle sorting
+        $sort = request('sort', 'newest');
+        switch ($sort) {
+            case 'oldest':
+                $query->oldest();
+                break;
+            case 'alphabetical':
+                $query->orderBy('title');
+                break;
+            default: // newest
+                $query->latest();
+                break;
         }
         
         $projects = $query->paginate(9);
@@ -117,7 +138,10 @@ class PortfolioController extends Controller
 
     public function dashboard()
     {
-        $projects = Project::latest()->paginate(10);
+        // Only show public projects in the dashboard
+        $projects = Project::where('is_public', true)
+                         ->latest()
+                         ->paginate(10);
         
         // Get unread messages count for the dashboard card
         $unreadCount = \App\Models\ContactSubmission::unread()->count();
@@ -136,8 +160,15 @@ class PortfolioController extends Controller
      */
     public function showProject(Project $project)
     {
-        // Get related projects (excluding the current one)
+        // Ensure the project is public and live
+        if (!$project->is_public || !$project->is_live) {
+            abort(404);
+        }
+
+        // Get related public projects (excluding the current one)
         $relatedProjects = Project::where('id', '!=', $project->id)
+                                ->where('is_public', true)
+                                ->where('is_live', true)
                                 ->where('status', 'complete')
                                 ->inRandomOrder()
                                 ->take(3)
