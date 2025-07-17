@@ -83,49 +83,33 @@
             </div>
         </div>
     </section>
-    <section id="skills" class="skills-section py-5 my-5 bg-dark rounded-4">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-heading mb-3">#skills</h2>
-                <p class="text-muted lead">Technical Proficiencies & Expertise</p>
-            </div>
-            
-            <div class="row g-4">
-                @foreach($skills as $category)
-                    <div class="col-md-6 col-lg-3">
-                        <div class="skill-category h-100 p-4 rounded-3 bg-dark-soft">
-                            <div class="skill-category-header d-flex align-items-center mb-4">
-                                <div class="icon-wrapper bg-primary bg-opacity-10 p-2 rounded-3 me-3">
-                                    <i class="{{ $category['icon'] }} text-primary"></i>
-                                </div>
-                                <h3 class="h5 mb-0">{{ $category['title'] }}</h3>
-                            </div>
-                            
-                            @if(isset($category['skills']))
-                                <div class="skills-list">
-                                    @foreach($category['skills'] as $skill)
-                                        <div class="skill-item mb-3">
-                                            <div class="d-flex justify-content-between mb-1">
-                                                <span class="small text-muted">{{ $skill['name'] }}</span>
-                                                <span class="small text-muted">{{ $skill['level'] }}%</span>
-                                            </div>
-                                            <div class="progress" style="height: 6px;">
-                                                <div class="progress-bar bg-primary" role="progressbar" style="width: {{ $skill['level'] }}%" aria-valuenow="{{ $skill['level'] }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @elseif(isset($category['tags']))
-                                <div class="skills-list d-flex flex-wrap gap-2">
-                                    @foreach($category['tags'] as $tag)
-                                        <span class="badge bg-dark text-white border border-secondary">{{ $tag }}</span>
-                                    @endforeach
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                @endforeach
-            </div>
+    <section class="skills-section">
+        <h2 class="section-heading">#skills</h2>
+        <div class="skills-grid">
+            @forelse($skills as $category)
+                <div class="skill-category">
+                    <h3>{{ $category['title'] }}</h3>
+                    <ul>
+                        @if(isset($category['skills']))
+                            @foreach($category['skills'] as $skill)
+                                <li>{{ $skill['name'] }}</li>
+                            @endforeach
+                        @elseif(isset($category['tags']))
+                            @foreach($category['tags'] as $tag)
+                                <li>{{ $tag }}</li>
+                            @endforeach
+                        @endif
+                    </ul>
+                </div>
+            @empty
+                <div class="skill-category">
+                    <h3>Skills</h3>
+                    <li>No skills data available.</li>
+                </div>
+            @endforelse
+        </div>
+
+        <div class="shape" style="top: 150px; right: -50px; width: 80px; height: 80px;"></div>
         </div>
     </section>
     <section id="about-me" class="about-section py-5 my-5">
@@ -156,9 +140,12 @@
         </div>
     </section>
     <section id="contacts" class="contact-section py-5 my-5">
-        <div class="text-center mb-5">
-            <h2 class="section-heading anim-on-scroll">#contacts</h2>
-            <p class="lead text-muted">Get in touch with me</p>
+        <div class="container">
+            <div class="flex items-center mb-8">
+                <h2 class="section-heading">#contacts</h2>
+                <div class="h-px bg-gray-700 flex-1 ml-4"></div>
+            </div>
+            <p class="text-gray-400 mb-8">Get in touch with me</p>
         </div>
         
         <div class="row justify-content-center">
