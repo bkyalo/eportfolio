@@ -38,7 +38,7 @@
                class="action-button btn-cached group/btn" 
                target="_blank" 
                rel="noopener noreferrer">
-                <span>Code</span>
+                <span>GitHub <span class="text-mono">&lt;~&gt;</span></span>
             </a>
         </div>
     </div>
