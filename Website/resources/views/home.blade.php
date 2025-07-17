@@ -51,7 +51,7 @@
             </div>
         </div>
     </section>
-    <section id="projects" class="section-container">
+    <section id="works" class="section-container">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">#projects</h2>
