@@ -215,69 +215,116 @@
             </style>
         </div>
     </section>
-    <section id="contacts" class="section-container">
+    <section id="contacts" class="section-container" style="padding: 4rem 0;">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">#contacts</h2>
-                <div class="section-divider"></div>
+            <div class="contact-header">
+                <h2>#contacts</h2>
+                <div class="line"></div>
             </div>
-            </div>
-            <p class="text-gray-400 mb-8">Get in touch with me</p>
-        </div>
-        
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="row g-4">
-                    <div class="col-md-6 anim-on-scroll">
-                        <div class="h-100 p-4 p-lg-5 bg-dark rounded-4">
-                            <h3 class="h4 mb-4">Let's work together</h3>
-                            <p class="text-muted mb-4">I'm interested in freelance opportunities. However, if you have other requests or questions, don't hesitate to contact me.</p>
-                            
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="icon-wrapper bg-primary bg-opacity-10 p-2 rounded-3 me-3">
-                                    <i class="fas fa-phone text-primary"></i>
-                                </div>
-                                <div>
-                                    <div class="small text-muted">Phone</div>
-                                    <a href="tel:+254757135612" class="text-white text-decoration-none">+254 757 135 612</a>
-                                </div>
-                            </div>
-                            
-                            <div class="d-flex align-items-center">
-                                <div class="icon-wrapper bg-primary bg-opacity-10 p-2 rounded-3 me-3">
-                                    <i class="fas fa-envelope text-primary"></i>
-                                </div>
-                                <div>
-                                    <div class="small text-muted">Email</div>
-                                    <a href="mailto:benkyalo075@gmail.com" class="text-white text-decoration-none">benkyalo075@gmail.com</a>
-                                </div>
-                            </div>
-                        </div>
+
+            <div class="contact-body">
+                <div class="left-content">
+                    <div class="contact-text">
+                        <p>
+                            I'm interested in freelance opportunities. However, if you have other request or question, don't hesitate to contact me
+                        </p>
                     </div>
-                    
-                    <div class="col-md-6 anim-on-scroll" data-aos-delay="100">
-                        <div class="h-100 p-4 p-lg-5 bg-primary text-white rounded-4">
-                            <h3 class="h4 mb-4">Send me a message</h3>
-                            <form>
-                                <div class="mb-3">
-                                    <label for="name" class="form-label small mb-1">Your Name</label>
-                                    <input type="text" class="form-control bg-dark bg-opacity-25 text-white border-0" id="name" placeholder="John Doe">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label small mb-1">Email Address</label>
-                                    <input type="email" class="form-control bg-dark bg-opacity-25 text-white border-0" id="email" placeholder="john@example.com">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message" class="form-label small mb-1">Message</label>
-                                    <textarea class="form-control bg-dark bg-opacity-25 text-white border-0" id="message" rows="4" placeholder="Hi Ben, I'd like to talk about..."></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-light btn-lg w-100 mt-3">Send Message</button>
-                            </form>
-                        </div>
+                </div>
+
+                <div class="message-box">
+                    <h3>Message me here</h3>
+                    <div class="contact-method">
+                        <i class="fa-brands fa-discord"></i>
+                        <span>!Elias#3519</span>
+                    </div>
+                    <div class="contact-method">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>{{ $contact->email ?? 'benkyalo075@gmail.com' }}</span>
                     </div>
                 </div>
             </div>
         </div>
+        
+        <style>
+            .contact-header {
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+                margin-bottom: 3rem;
+            }
+
+            .contact-header h2 {
+                font-size: 2.5rem;
+                color: #FFFFFF;
+                font-weight: 500;
+                white-space: nowrap;
+                margin: 0;
+            }
+
+            .contact-header .line {
+                width: 100%;
+                height: 1px;
+                background-color: #BD93F9;
+            }
+
+            .contact-body {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 2rem;
+            }
+
+            .contact-text {
+                max-width: 450px;
+                line-height: 1.8;
+                color: #b0b0b0;
+                font-size: 1.1rem;
+            }
+            
+            .message-box {
+                border: 1px solid #6272A4;
+                padding: 1.5rem;
+                min-width: 280px;
+            }
+
+            .message-box h3 {
+                font-size: 1rem;
+                color: #FFFFFF;
+                font-weight: 500;
+                margin-bottom: 1.5rem;
+            }
+
+            .contact-method {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                color: #b0b0b0;
+                margin-bottom: 0.75rem;
+            }
+
+            .contact-method i {
+                font-size: 1.2rem;
+                width: 20px;
+                text-align: center;
+                color: #BD93F9;
+            }
+            
+            @media (max-width: 768px) {
+                .contact-body {
+                    flex-direction: column;
+                }
+                
+                .message-box {
+                    width: 100%;
+                    margin-top: 2rem;
+                }
+                
+                .contact-text {
+                    max-width: 100%;
+                }
+            }
+        </style>
+    </section>
     </section>
     </div>
 
