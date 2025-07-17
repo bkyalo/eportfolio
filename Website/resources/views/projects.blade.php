@@ -1,6 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+{{-- Debug output --}}
+@php
+    \Log::info('Projects in View:', [
+        'all_projects_count' => $projects->count(),
+        'all_projects' => $projects->toArray(),
+        'complete_apps' => $projects->where('is_small_project', false)->where('is_public', true)->toArray(),
+        'small_projects' => $projects->where('is_small_project', true)->where('is_public', true)->toArray()
+    ]);
+@endphp
 <div class="py-12 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
@@ -20,7 +29,9 @@
             </div>
             
             @php
-                $completeApps = $projects->where('is_small_project', false);
+                $completeApps = $projects->filter(function($project) {
+                    return $project->is_small_project == 0 && $project->is_public == 1;
+                });
             @endphp
             
             @if($completeApps->count() > 0)
@@ -58,7 +69,9 @@
             </div>
             
             @php
-                $smallProjects = $projects->where('is_small_project', true);
+                $smallProjects = $projects->filter(function($project) {
+                    return $project->is_small_project == 1 && $project->is_public == 1;
+                });
             @endphp
             
             @if($smallProjects->count() > 0)

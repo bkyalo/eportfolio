@@ -86,16 +86,25 @@ class PortfolioController extends Controller
 
     public function projects()
     {
-        $query = Project::where('is_live', true)
-                      ->where('is_public', true);
+        $query = Project::where('is_public', true)
+                      ->addSelect('*');
+        
+        // Debug: Log the raw SQL query
+        \Log::info('Projects Query:', ['sql' => $query->toSql(), 'bindings' => $query->getBindings()]);
+        
+        // Get the projects
+        $projects = $query->get();
+        
+        // Debug: Log the projects data
+        \Log::info('Projects Data:', $projects->toArray());
         
         // Handle search
         if (request()->has('search')) {
             $search = request('search');
-            $query->where(function($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%")
-                  ->orWhere('stack', 'like', "%{$search}%");
+            $projects = $projects->filter(function($project) use ($search) {
+                return str_contains(strtolower($project->title), strtolower($search)) ||
+                       str_contains(strtolower($project->brief_description), strtolower($search)) ||
+                       str_contains(strtolower($project->stack), strtolower($search));
             });
         }
         
