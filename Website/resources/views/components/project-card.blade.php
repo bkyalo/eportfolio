@@ -4,6 +4,7 @@
     'techStack' => '',
     'image' => 'images/projects/placeholder.jpg',
     'liveUrl' => '#',
+    'isLive' => false,
     'codeUrl' => '#',
     'category' => 'Project',
     'accent' => 'purple' // purple, green, or red
@@ -25,13 +26,12 @@
         <p class="description text-gray-400 mb-4 flex-grow">{{ $description }}</p>
         
         <div class="card-actions mt-auto">
-            @if($liveUrl !== '#')
+            @if($isLive && $liveUrl !== '#')
             <a href="{{ $liveUrl }}" 
                class="action-button btn-live group/btn" 
                target="_blank" 
                rel="noopener noreferrer">
                 <span>Live <span class="text-mono">&lt;~&gt;</span></span>
-                <span class="opacity-0 group-hover/btn:opacity-100 ml-2 transition-opacity duration-300">→</span>
             </a>
             @endif
             <a href="{{ $codeUrl }}" 
@@ -39,7 +39,6 @@
                target="_blank" 
                rel="noopener noreferrer">
                 <span>Code</span>
-                <span class="opacity-0 group-hover/btn:opacity-100 ml-2 transition-opacity duration-300">→</span>
             </a>
         </div>
     </div>

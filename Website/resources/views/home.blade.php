@@ -74,6 +74,7 @@
                             :techStack="$project['tech_stack']"
                             :image="$project['image']"
                             :liveUrl="$project['live_url']"
+                            :isLive="$project['is_live'] ?? false"
                             :codeUrl="$project['code_url']"
                             :accent="$project['accent'] ?? 'purple'"
                         />

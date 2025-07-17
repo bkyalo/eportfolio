@@ -14,9 +14,8 @@ class PortfolioController extends Controller
         // Get the contact details
         $contact = SiteContactDetail::first();
         
-        // Get projects from database - only include public projects that are live
-        $projects = Project::where('is_live', true)
-            ->where('is_public', true)
+        // Get projects from database - only include public projects
+        $projects = Project::where('is_public', true)
             ->orderBy('created_at', 'desc')
             ->get()
             ->map(function($project) {
@@ -27,6 +26,7 @@ class PortfolioController extends Controller
                     'image' => $project->image_path ?? 'images/projects/placeholder.jpg',
                     'category' => 'Web Development', // Default category since it's not in the schema
                     'live_url' => $project->live_url ?? '#',
+                    'is_live' => $project->is_live, // Add is_live status
                     'code_url' => $project->github_url ?? '#',
                     'accent' => 'purple' // Default accent color since it's not in the schema
                 ];
