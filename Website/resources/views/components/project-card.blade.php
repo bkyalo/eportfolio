@@ -52,6 +52,7 @@
         max-width: 400px;
         overflow: hidden;
         border: 1px solid var(--border-color);
+        border-radius: 0;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         height: 100%;
@@ -102,12 +103,14 @@
         height: 200px;
         position: relative;
         overflow: hidden;
+        border-radius: 0;
     }
 
     .card-image {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        border-radius: 0;
         transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -174,20 +177,15 @@
 
     .action-button {
         flex: 1;
-        padding: 10px 16px;
-        border-radius: 6px;
-        background-color: transparent;
-        font-size: 0.95rem;
-        font-weight: 500;
-        text-align: center;
-        text-decoration: none;
         display: inline-flex;
         align-items: center;
-        justify-content: center;
-        gap: 8px;
+        padding: 8px 16px;
+        margin-right: 12px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        border-radius: 0;
         transition: all 0.3s ease;
-        cursor: pointer;
-        border: 1px solid;
+        text-decoration: none;
         position: relative;
         overflow: hidden;
         z-index: 1;
@@ -211,8 +209,10 @@
     }
     
     .btn-live {
-        border-color: var(--accent-purple);
-        color: var(--accent-purple);
+        background-color: var(--accent-purple);
+        color: white;
+        border: 1px solid var(--accent-purple);
+        border-radius: 0;
     }
     
     .btn-live:hover {
@@ -222,7 +222,8 @@
 
     .project-card[data-accent="red"] .btn-live {
         border-color: var(--accent-red);
-        color: var(--accent-red);
+        color: white;
+        background-color: var(--accent-red);
     }
 
     .project-card[data-accent="red"] .btn-live:hover {
@@ -231,7 +232,8 @@
 
     .project-card[data-accent="green"] .btn-live {
         border-color: var(--accent-green);
-        color: var(--accent-green);
+        color: white;
+        background-color: var(--accent-green);
     }
 
     .project-card[data-accent="green"] .btn-live:hover {
@@ -239,8 +241,10 @@
     }
 
     .btn-cached {
-        border-color: var(--border-color);
+        background-color: transparent;
         color: var(--text-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: 0;
     }
 
     .btn-cached:hover {
