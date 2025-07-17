@@ -175,17 +175,17 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
-    // Public project routes (kept for backward compatibility)
-    Route::get('projects', [\App\Http\Controllers\PortfolioController::class, 'projects'])
-         ->name('projects.index');
-    Route::get('projects/{project:slug}', [ProjectController::class, 'show'])
-         ->name('projects.show');
-         
     // Publication Routes
     Route::resource('publications', PublicationController::class);
 });
 
-// Public project views (moved to /portfolio/projects for public access)
+// Public project routes
+Route::get('projects', [\App\Http\Controllers\PortfolioController::class, 'projects'])
+     ->name('projects.index');
+Route::get('projects/{project:slug}', [ProjectController::class, 'show'])
+     ->name('projects.show');
+
+// Legacy public project views (kept for backward compatibility)
 Route::get('portfolio/projects', [\App\Http\Controllers\PortfolioController::class, 'projects'])
      ->name('projects.public.index');
 Route::get('portfolio/projects/{project:slug}', [\App\Http\Controllers\PortfolioController::class, 'showProject'])

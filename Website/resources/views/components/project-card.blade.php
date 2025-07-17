@@ -7,15 +7,18 @@
     'isLive' => false,
     'codeUrl' => '#',
     'category' => 'Project',
-    'accent' => 'purple' // purple, green, or red
+    'accent' => 'purple', // purple, green, or red
+    'hideImage' => false
 ])
 
 <div class="project-card group" data-accent="{{ $accent }}">
+    @unless($hideImage)
     <div class="card-image-container overflow-hidden">
         <img class="card-image w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
              src="{{ asset('storage/' . $image) }}" 
              alt="{{ $title }}">
     </div>
+    @endunless
 
     <div class="card-tech-stack px-4 py-3 border-b border-border-color bg-gray-900/30">
         <span class="text-sm font-mono text-gray-400">{{ $techStack }}</span>
