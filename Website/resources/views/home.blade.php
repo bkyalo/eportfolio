@@ -159,27 +159,60 @@
                 <h2 class="section-title">#about-me</h2>
                 <div class="section-divider"></div>
             </div>
-            <div class="row align-items-center">
-                <div class="col-lg-6 mb-4 mb-lg-0">
-                    <div class="about-text">
-                        <h3 class="h2 fw-bold mb-4">Hello, I'm Ben Tito Kyalo!</h3>
-                        <div class="text-muted mb-4">
-                            <p>I'm an Electrical and Electronics Engineer and IT Consultant with a strong passion for Open Source Software and DevOps. Currently pursuing a BSc in Electrical and Electronics Engineering, I specialize in developing robust IT solutions and infrastructure.</p>
-                            <p>With expertise in server administration, database management, and full-stack development, I bridge the gap between hardware and software to create efficient, scalable solutions. My work focuses on implementing modern technologies to solve real-world problems.</p>
-                        </div>
-                        <a href="#" class="btn btn-outline-primary">
-                            Read more about me <i class="fas fa-arrow-right ms-2"></i>
-                        </a>
+            
+            <div class="about-content" style="display: flex; gap: 4rem; margin-top: 2rem;">
+                <div class="about-text" style="flex: 1.5; align-self: flex-start;">
+                    <h3 class="about-name" style="font-size: 1.5rem; color: #FFFFFF; margin-bottom: 1.5rem; font-weight: 500;">
+                        Hello, I'm {{ $contact->name ?? 'Ben Tito Kyalo' }}!
+                    </h3>
+                    
+                    <div class="about-description" style="color: #b0b0b0; line-height: 1.8; margin-bottom: 2rem;">
+                        <p style="margin-bottom: 1.5rem;">
+                            I'm an Electrical and Electronics Engineer and IT Consultant with a strong passion for Open Source Software and DevOps. Currently pursuing a BSc in Electrical and Electronics Engineering, I specialize in developing robust IT solutions and infrastructure.
+                        </p>
+                        <p>
+                            With expertise in server administration, database management, and full-stack development, I bridge the gap between hardware and software to create efficient, scalable solutions. My work focuses on implementing modern technologies to solve real-world problems.
+                        </p>
                     </div>
+                    
+                    <a href="{{ route('about') }}" class="read-more-btn" style="display: inline-block; border: 1px solid #6272A4; padding: 0.75rem 1.5rem; color: #E0E0E0; text-decoration: none; transition: all 0.3s ease; font-size: 0.9rem;">
+                        Read more →
+                    </a>
                 </div>
-                <div class="col-lg-6">
-                    <div class="position-relative anim-on-scroll" data-aos="fade-left">
-                        <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary bg-opacity-10 rounded-4" style="transform: rotate(3deg); z-index: -1;"></div>
-                        <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 rounded-4" style="transform: rotate(-2deg); z-index: -1;"></div>
-                            <img src="{{ $contact && $contact->profile_photo_path ? asset('storage/' . $contact->profile_photo_path) : asset('images/tiro.png') }}" alt="{{ $contact->name ?? 'Ben Tito Kyalo' }}" class="img-fluid rounded-4" style="width: 100%; height: auto; max-width: 100%;">
+                
+                <div class="about-image-wrapper" style="flex: 1; position: relative; margin-top: 2rem; max-width: 300px; margin-left: auto; margin-right: 2rem;">
+                    <div class="dots" style="position: absolute; width: 120px; height: 120px; background-image: radial-gradient(circle, #6272a4 2px, transparent 2px); background-size: 15px 15px; top: 50%; left: 50%; transform: translate(-30%, -60%); z-index: 1;"></div>
+                    
+                    <div style="position: relative; padding-bottom: 1.5rem;">
+                        <img src="{{ $contact && $contact->profile_photo_path ? asset('storage/' . $contact->profile_photo_path) : asset('images/tiro.png') }}" 
+                             alt="{{ $contact->name ?? 'Ben Tito Kyalo' }}" 
+                             style="width: 100%; max-width: 300px; height: auto; z-index: 5; position: relative; border-radius: 8px 8px 0 0; display: block;">
+                        
+                        <div style="height: 2px; background-color: #BD93F9; width: 80%; margin: 0 auto;"></div>
                     </div>
+                    
+                    <div class="dots" style="position: absolute; width: 120px; height: 120px; background-image: radial-gradient(circle, #6272a4 2px, transparent 2px); background-size: 15px 15px; bottom: 90px; z-index: 10;"></div>
+                    
+                    <div style="content: ''; position: absolute; bottom: -40px; right: 20px; height: 60px; width: 1px; background-color: #BD93F9;"></div>
                 </div>
             </div>
+            
+            <style>
+                @media (max-width: 992px) {
+                    .about-content {
+                        flex-direction: column !important;
+                    }
+                    .about-image-wrapper {
+                        margin: 3rem auto 0 !important;
+                        max-width: 300px;
+                    }
+                }
+                
+                .read-more-btn:hover {
+                    background-color: #44475a;
+                    border-color: #E0E0E0;
+                }
+            </style>
         </div>
     </section>
     <section id="contacts" class="section-container">
