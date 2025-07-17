@@ -56,17 +56,15 @@
                                     </div>
                                 </td>
                                 <td>
-                                    @php
-                                        $statusColors = [
-                                            'complete' => 'success',
-                                            'in_progress' => 'warning',
-                                            'planned' => 'info'
-                                        ];
-                                        $statusColor = $statusColors[$project->status] ?? 'secondary';
-                                    @endphp
-                                    <span class="badge bg-{{ $statusColor }}-subtle text-{{ $statusColor }} text-uppercase">
-                                        {{ str_replace('_', ' ', $project->status) }}
-                                    </span>
+                                    @if($project->is_small_project)
+                                        <span class="badge bg-info-subtle text-info text-uppercase">
+                                            Minor
+                                        </span>
+                                    @else
+                                        <span class="badge bg-primary-subtle text-primary text-uppercase">
+                                            Major
+                                        </span>
+                                    @endif
                                 </td>
                                 <td>
                                     <form action="{{ route('admin.projects.toggle-publish', $project) }}" method="POST" class="d-inline">
