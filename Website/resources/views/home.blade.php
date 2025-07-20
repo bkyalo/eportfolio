@@ -20,7 +20,7 @@
                         @endif
                     </p>
 
-                    <a href="#contact" class="contact-button">Contact me !!</a>
+                    <a href="#contacts" class="contact-button">Contact me !!</a>
                 </div>
 
                 <div class="hero-image-wrapper">
@@ -36,7 +36,7 @@
             </div>
         </div>
     </section>
-    <section id="quote" class="section-container">
+    <section class="section-container">
         <div class="container">
             <div class="quote-container">
                 @if(isset($contact) && $contact->saying)
@@ -77,7 +77,7 @@
             </div>
         </div>
     </section>
-    <section id="skills-section" class="section-container">
+    <section id="skills" class="section-container">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">#skills</h2>
@@ -153,7 +153,7 @@
         </style>
         </div>
     </section>
-    <section id="about" class="section-container">
+    <section id="about-me" class="section-container">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">#about-me</h2>
@@ -215,7 +215,7 @@
             </style>
         </div>
     </section>
-    <section id="contact" class="section-container" style="padding: 4rem 0;">
+    <section id="contacts" class="section-container" style="padding: 4rem 0;">
         <div class="container">
             <div class="contact-header">
                 <h2>#contacts</h2>
@@ -344,38 +344,10 @@
 --}}
 @push('styles')
 <style>
-    /* Animation Styles */
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
+    /* Section Styles */
     .section-container {
         width: 100%;
         padding: 4rem 0;
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        visibility: hidden;
-    }
-
-    .section-container.visible {
-        opacity: 1;
-        transform: translateY(0);
-        visibility: visible;
-    }
-
-    /* Ensure hero section is always visible */
-    #home {
-        opacity: 1;
-        transform: none;
-        visibility: visible;
     }
 
     .section-content {
@@ -782,11 +754,10 @@
     .back-to-top:hover {
         transform: translateY(-5px) !important;
     }
-    .project-card-wrapper {
+    .anim-on-scroll {
         opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        transition-delay: calc(var(--index) * 0.1s);
+        transform: translateY(30px);
+        transition: all 0.6s ease-out;
     }
     .anim-on-scroll.visible {
         opacity: 1;
@@ -820,83 +791,6 @@
 |
 --}}
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script>
-<script>
-    // Enhanced Intersection Observer for scroll animations
-    document.addEventListener('DOMContentLoaded', function() {
-        // Animation for sections
-        const sections = document.querySelectorAll('.section-container:not(#home)');
-        const projectCards = document.querySelectorAll('.project-card-wrapper');
-        
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const sectionObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Add visible class to trigger animation
-                    entry.target.classList.add('visible');
-                    
-                    // If it's the works section, animate the project cards
-                    if (entry.target.id === 'works') {
-                        const cards = entry.target.querySelectorAll('.project-card-wrapper');
-                        cards.forEach((card, index) => {
-                            setTimeout(() => {
-                                card.style.opacity = '1';
-                                card.style.transform = 'translateY(0)';
-                            }, index * 100);
-                        });
-                    }
-                } else {
-                    // Remove visible class when section is not in view
-                    // But don't hide the section that's currently active in the URL hash
-                    if (window.location.hash !== '#' + entry.target.id) {
-                        entry.target.classList.remove('visible');
-                    }
-                }
-            });
-        }, observerOptions);
-
-        // Observe each section (except home)
-        sections.forEach(section => {
-            sectionObserver.observe(section);
-        });
-
-        // Handle initial hash on page load
-        if (window.location.hash) {
-            const target = document.querySelector(window.location.hash);
-            if (target) {
-                setTimeout(() => {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-            }
-        }
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    // Show the target section before scrolling
-                    targetElement.classList.add('visible');
-                    
-                    setTimeout(() => {
-                        targetElement.scrollIntoView({ 
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }, 50);
-                }
-            });
-        });
-    });
-</script>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Back to top button logic
