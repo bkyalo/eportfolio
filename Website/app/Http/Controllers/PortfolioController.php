@@ -31,28 +31,8 @@ class PortfolioController extends Controller
             'profile_photo_path'
         ]);
         
-        // Get all public projects for the main projects section
+        // Get top 3 most liked projects for the main projects section
         $projects = Project::where('is_public', true)
-            ->orderBy('created_at', 'desc')
-            ->get()
-            ->map(function($project) {
-                return [
-                    'title' => $project->title,
-                    'description' => $project->brief_description,
-                    'tech_stack' => $project->stack,
-                    'image' => $project->image_path ?? 'images/projects/placeholder.jpg',
-                    'category' => 'Web Development', // Default category since it's not in the schema
-                    'live_url' => $project->live_url ?? '#',
-                    'is_live' => $project->is_live, // Add is_live status
-                    'code_url' => $project->github_url ?? '#',
-                    'accent' => 'purple', // Default accent color since it's not in the schema
-                    'likes' => $project->likes ?? 0, // Include likes count
-                    'slug' => $project->slug // Include project slug for like functionality
-                ];
-            })->toArray();
-            
-        // Get top 3 most liked projects
-        $topProjects = Project::where('is_public', true)
             ->where('likes', '>', 0) // Only include projects with at least 1 like
             ->orderBy('likes', 'desc')
             ->take(3)
@@ -63,9 +43,11 @@ class PortfolioController extends Controller
                     'description' => $project->brief_description,
                     'tech_stack' => $project->stack,
                     'image' => $project->image_path ?? 'images/projects/placeholder.jpg',
+                    'category' => 'Web Development',
                     'live_url' => $project->live_url ?? '#',
                     'is_live' => $project->is_live,
                     'code_url' => $project->github_url ?? '#',
+                    'accent' => 'purple',
                     'likes' => $project->likes ?? 0,
                     'slug' => $project->slug,
                     'created_at' => $project->created_at
