@@ -1,5 +1,90 @@
 @extends('layouts.app')
 
+@push('scripts')
+<script>
+// Simple function to set a cookie
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+// Function to handle like button clicks
+function handleLikeButtonClick(button) {
+    const projectSlug = button.getAttribute('data-project-slug');
+    const icon = button.querySelector('i');
+    const isLiked = button.classList.contains('text-yellow-400');
+    
+    console.log('Like button clicked for project:', projectSlug);
+    console.log('Is already liked:', isLiked);
+    
+    // Don't allow multiple likes
+    if (isLiked) {
+        console.log('Project already liked, ignoring click');
+        return;
+    }
+    
+    // Visual feedback
+    button.classList.add('animate-ping-once');
+    
+    // Get CSRF token
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+    
+    // Send fetch request
+    fetch(`/projects/${projectSlug}/like`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': csrfToken
+        },
+        credentials: 'same-origin'
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Server response:', data);
+        if (data.success) {
+            // Update UI
+            button.classList.add('text-yellow-400', 'border-yellow-400');
+            icon.classList.remove('bi-star');
+            icon.classList.add('bi-star-fill');
+            button.setAttribute('title', 'You liked this project');
+            
+            // Set a cookie to remember the like
+            setCookie(`liked_project_${projectSlug}`, '1', 365);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    })
+    .finally(() => {
+        // Remove animation class after animation completes
+        setTimeout(() => {
+            button.classList.remove('animate-ping-once');
+        }, 500);
+    });
+}
+
+// Initialize when DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle like button clicks using event delegation
+    document.addEventListener('click', function(e) {
+        // Check if the clicked element or its parent is a like button
+        const likeButton = e.target.closest('.like-button');
+        if (likeButton) {
+            e.preventDefault();
+            e.stopPropagation();
+            handleLikeButtonClick(likeButton);
+        }
+    });
+});
+</script>
+@endpush
+
 @section('content')
 {{-- Debug output --}}
 @php
@@ -261,63 +346,117 @@ function setCookie(name, value, days) {
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Add CSRF token to all AJAX requests
-    $.ajaxSetup({
+// Function to handle like button clicks
+function handleLikeButtonClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const projectSlug = this.getAttribute('data-project-slug');
+    const icon = this.querySelector('i');
+    const isLiked = this.classList.contains('text-yellow-400');
+    
+    console.log('Like button clicked');
+    console.log('Project slug:', projectSlug);
+    console.log('Is already liked:', isLiked);
+    
+    // Don't allow multiple likes
+    if (isLiked) {
+        console.log('Project already liked, ignoring click');
+        return;
+    }
+    
+    // Visual feedback
+    this.classList.add('animate-ping-once');
+    console.log('Added visual feedback');
+    
+    // Send AJAX request to like the project
+    fetch(`/projects/${projectSlug}/like`, {
+        method: 'POST',
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        console.log('Response status:', response.status);
+        return response.json().then(data => {
+            console.log('Response data:', data);
+            return { response: response, data: data };
+        });
+    })
+    .then(({response, data}) => {
+        if (response.ok && data.success) {
+            console.log('Like successful, updating UI');
+            // Update UI
+            this.classList.add('text-yellow-400', 'border-yellow-400');
+            icon.classList.remove('bi-star');
+            icon.classList.add('bi-star-fill');
+            this.setAttribute('title', 'You liked this project');
+            
+            // Set a cookie to remember the like
+            setCookie(`liked_project_${projectSlug}`, '1', 365);
+            
+            // Remove animation class after animation completes
+            setTimeout(() => {
+                this.classList.remove('animate-ping-once');
+            }, 500);
         }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        console.error('Error details:', {
+            name: error.name,
+            message: error.message,
+            stack: error.stack
+        });
+        this.classList.remove('animate-ping-once');
     });
+}
 
-    // Handle like button clicks
-    document.querySelectorAll('.like-button').forEach(button => {
-        button.addEventListener('click', function(e) {
+// Initialize when DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Get CSRF token for AJAX requests
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    
+    // Set up CSRF token for all fetch requests
+    if (csrfToken) {
+        const originalFetch = window.fetch;
+        window.fetch = function(resource, options = {}) {
+            options.headers = {
+                ...options.headers,
+                'X-CSRF-TOKEN': csrfToken,
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            };
+            return originalFetch(resource, options);
+        };
+    }
+
+        // Use event delegation for like buttons
+    document.addEventListener('click', function(e) {
+        // Check if the clicked element or any of its parents is a like button
+        const likeButton = e.target.closest('.like-button');
+        if (likeButton) {
+            console.log('Like button found, handling click');
             e.preventDefault();
             e.stopPropagation();
-            
-            const projectSlug = this.getAttribute('data-project-slug');
-            const icon = this.querySelector('svg');
-            const isLiked = this.classList.contains('text-yellow-400');
-            
-            // Don't allow multiple likes
-            if (isLiked) return;
-            
-            // Visual feedback
-            this.classList.add('animate-ping-once');
-            
-            // Send AJAX request to like the project
-            fetch(`/projects/${projectSlug}/like`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                credentials: 'same-origin'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Update UI
-                    this.classList.add('text-yellow-400');
-                    icon.setAttribute('fill', 'currentColor');
-                    this.setAttribute('title', 'You liked this project');
-                    
-                    // Set a cookie to remember the like
-                    setCookie(`liked_project_${projectSlug}`, '1', 365);
-                    
-                    // Remove animation class after animation completes
-                    setTimeout(() => {
-                        this.classList.remove('animate-ping-once');
-                    }, 500);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                this.classList.remove('animate-ping-once');
-            });
-        });
-    });
+            handleLikeButtonClick.call(likeButton, e);
+            return; // Stop further processing
+        }
+        
+        // Check if the click was on the star icon inside the like button
+        const starIcon = e.target.closest('.like-button i');
+        if (starIcon && starIcon.closest('.like-button')) {
+            console.log('Star icon inside like button clicked');
+            const likeButton = starIcon.closest('.like-button');
+            e.preventDefault();
+            e.stopPropagation();
+            handleLikeButtonClick.call(likeButton, e);
+        }
+    }, true); // Use capture phase to catch the event earlier
 });
 </script>
 
