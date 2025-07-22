@@ -9,7 +9,7 @@
     <!-- Primary Meta Tags -->
     <title>@yield('title', config('app.name', 'My Portfolio'))</title>
     <meta name="title" content="@yield('meta_title', config('app.name', 'My Portfolio'))">
-    <meta name="description" content="@yield('meta_description', 'A professional portfolio showcasing my work and skills')">
+    <meta name="description" content="@yield('meta_description', 'Ben TITO - A professional portfolio showcasing my work and skills')">
     <meta name="keywords" content="@yield('meta_keywords', 'portfolio, web development, design, projects')">
     <meta name="author" content="{{ config('app.name', 'My Portfolio') }}">
     <meta name="robots" content="index, follow">
@@ -18,14 +18,14 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:title" content="@yield('meta_title', config('app.name', 'My Portfolio'))">
-    <meta property="og:description" content="@yield('meta_description', 'A professional portfolio showcasing my work and skills')">
+    <meta property="og:description" content="@yield('meta_description', 'Ben TITO - A professional portfolio showcasing my work and skills')">
     <meta property="og:image" content="@yield('meta_image', asset('images/og-image.jpg'))">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ url()->current() }}">
     <meta property="twitter:title" content="@yield('meta_title', config('app.name', 'My Portfolio'))">
-    <meta property="twitter:description" content="@yield('meta_description', 'A professional portfolio showcasing my work and skills')">
+    <meta property="twitter:description" content="@yield('meta_description', 'Ben TITO - A professional portfolio showcasing my work and skills')">
     <meta property="twitter:image" content="@yield('meta_image', asset('images/og-image.jpg'))">
     
     <!-- Canonical URL -->
