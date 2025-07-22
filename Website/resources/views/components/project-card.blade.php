@@ -8,10 +8,25 @@
     'codeUrl' => '#',
     'category' => 'Project',
     'accent' => 'purple', // purple, green, or red
-    'hideImage' => false
+    'hideImage' => false,
+    'likes' => 0,
+    'slug' => ''
 ])
 
-<div class="project-card group" data-accent="{{ $accent }}">
+@php
+    $isLiked = isset($_COOKIE['liked_project_' . $slug]);
+@endphp
+
+<div class="project-card group relative" data-accent="{{ $accent }}">
+    <!-- Star Button -->
+    <button class="like-button absolute -top-2 -right-2 z-10 w-8 h-8 rounded-full bg-gray-900 border-2 border-gray-700 flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 hover:border-yellow-400 {{ $isLiked ? 'text-yellow-400' : 'text-gray-400 hover:text-gray-300' }}" 
+            data-project-slug="{{ $slug }}"
+            title="{{ $isLiked ? 'You liked this project' : 'Like this project' }}">
+        <svg class="w-3 h-3" fill="{{ $isLiked ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+        </svg>
+    </button>
+
     @unless($hideImage)
     <div class="card-image-container overflow-hidden">
         <img class="card-image w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
@@ -29,6 +44,7 @@
         <p class="description text-gray-400 mb-4 flex-grow">{{ $description }}</p>
         
         <div class="card-actions mt-auto">
+        <div class="flex space-x-2">
             @if($isLive && $liveUrl !== '#')
             <a href="{{ $liveUrl }}" 
                class="action-button btn-live group/btn" 
@@ -44,6 +60,7 @@
                 <span>GitHub <span class="text-mono">&lt;~&gt;</span></span>
             </a>
         </div>
+    </div>
     </div>
 </div>
 

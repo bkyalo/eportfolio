@@ -22,6 +22,7 @@ class Project extends Model
         'status',
         'is_small_project',
         'is_public',
+        'likes',
     ];
 
     protected $casts = [
@@ -53,5 +54,15 @@ class Project extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    /**
+     * Increment the likes count for the project.
+     *
+     * @return int
+     */
+    public function incrementLikes()
+    {
+        return $this->increment('likes');
     }
 }

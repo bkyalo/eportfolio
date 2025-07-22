@@ -179,6 +179,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('publications', PublicationController::class);
 });
 
+// Project like route
+Route::post('projects/{project}/like', [\App\Http\Controllers\ProjectLikeController::class, 'store'])
+    ->name('projects.like');
+
 // Public project routes
 Route::get('projects', [\App\Http\Controllers\PortfolioController::class, 'projects'])
      ->name('projects.index');
