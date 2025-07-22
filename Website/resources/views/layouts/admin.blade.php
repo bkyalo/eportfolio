@@ -104,11 +104,20 @@
                 <div class="d-flex align-items-center">
                     <img src="https://www.gravatar.com/avatar/{{ md5(auth()->user()->email) }}?s=200&d=mp" 
                          alt="User" class="rounded-circle me-2" width="36" height="36">
-                    <div>
+                    <div class="flex-grow-1">
                         <div class="fw-bold text-truncate" style="max-width: 150px;">{{ auth()->user()->name }}</div>
-                        <a href="{{ route('profile.edit') }}" class="text-decoration-none small text-muted">
-                            View profile
-                        </a>
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('profile.edit') }}" class="text-decoration-none small text-muted me-2">
+                                View profile
+                            </a>
+                            <span class="text-muted">•</span>
+                            <form method="POST" action="{{ route('logout') }}" class="d-inline ms-2">
+                                @csrf
+                                <button type="submit" class="btn btn-link p-0 text-decoration-none small text-muted">
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

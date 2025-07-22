@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\ContactSubmission;
 use App\Models\FunFact;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
@@ -14,7 +15,7 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View
     {
         // Get all projects for the stats
         $projects = Project::latest()->get();
@@ -29,21 +30,17 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
             
-        // Count unread messages
         $unreadCount = ContactSubmission::where('is_read', false)->count();
-            
-        // Get visible fun facts for the dashboard
-        $funFacts = FunFact::where('is_visible', true)
-            ->orderBy('sort_order')
-            ->get();
-
-        // Return the dashboard view with all the data
-        return view('dashboard', compact(
-            'projects',
-            'recentProjects',
-            'recentSubmissions',
-            'funFacts',
-            'unreadCount'
-        ));
+        
+        // Get fun facts
+        $funFacts = FunFact::latest()->get();
+        
+        return view('dashboard', [
+            'projects' => $projects, // Changed from projectsCount to projects
+            'recentProjects' => $recentProjects,
+            'recentSubmissions' => $recentSubmissions,
+            'unreadCount' => $unreadCount,
+            'funFacts' => $funFacts,
+        ]);
     }
 }
