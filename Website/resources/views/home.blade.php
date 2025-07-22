@@ -51,6 +51,86 @@
             </div>
         </div>
     </section>
+
+    <!-- Top Projects Section -->
+    <section id="top-projects" class="section-container">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">#top-projects</h2>
+                <div class="section-divider"></div>
+                <p class="section-subtitle">Most loved projects by the community</p>
+            </div>
+            
+            @if(isset($topProjects) && count($topProjects) > 0)
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+                    @foreach($topProjects as $project)
+                        <div class="project-card bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 relative">
+                            <!-- Project Image -->
+                            <div class="h-48 overflow-hidden">
+                                <img src="{{ asset($project['image']) }}" alt="{{ $project['title'] }}" class="w-full h-full object-cover">
+                            </div>
+                            
+                            <!-- Project Info -->
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2 text-white">{{ $project['title'] }}</h3>
+                                <p class="text-gray-300 mb-4">{{ Str::limit($project['description'], 100) }}</p>
+                                
+                                <!-- Tech Stack -->
+                                @if(!empty($project['tech_stack']))
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        @foreach(explode(',', $project['tech_stack']) as $tech)
+                                            <span class="px-2 py-1 bg-gray-700 text-xs rounded-full text-gray-300">{{ trim($tech) }}</span>
+                                        @endforeach
+                                    </div>
+                                @endif
+                                
+                                <!-- Like Button -->
+                                <div class="flex items-center justify-between mt-4">
+                                    <div class="flex items-center space-x-2">
+                                        <button class="like-button snap-action-buttons snap-action-btn like-btn {{ isset($_COOKIE['liked_project_' . $project['slug']]) ? 'text-yellow-400 border-yellow-400' : 'text-gray-400 border-gray-600' }}" 
+                                                data-project-slug="{{ $project['slug'] }}"
+                                                title="{{ isset($_COOKIE['liked_project_' . $project['slug']]) ? 'You liked this project' : 'Like this project' }}">
+                                            <i class="bi {{ isset($_COOKIE['liked_project_' . $project['slug']]) ? 'bi-star-fill' : 'bi-star' }}"></i>
+                                        </button>
+                                        <span class="text-sm text-gray-400">{{ $project['likes'] }} {{ $project['likes'] == 1 ? 'like' : 'likes' }}</span>
+                                    </div>
+                                    
+                                    <!-- Project Links -->
+                                    <div class="flex space-x-2">
+                                        @if($project['is_live'] && $project['live_url'] != '#')
+                                            <a href="{{ $project['live_url'] }}" target="_blank" class="text-blue-400 hover:text-blue-300 transition-colors" title="View Live">
+                                                <i class="fas fa-external-link-alt"></i>
+                                            </a>
+                                        @endif
+                                        @if($project['code_url'] != '#')
+                                            <a href="{{ $project['code_url'] }}" target="_blank" class="text-gray-400 hover:text-white transition-colors" title="View Code">
+                                                <i class="fab fa-github"></i>
+                                            </a>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                
+                <!-- View All Projects Link -->
+                <div class="text-center mt-10">
+                    <a href="{{ route('projects') }}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                        View All Projects
+                        <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                </div>
+            @else
+                <div class="text-center py-10">
+                    <p class="text-gray-400">No top projects to display yet. Be the first to like a project!</p>
+                </div>
+            @endif
+        </div>
+    </section>
+
     <section id="works" class="section-container">
         <div class="container">
             <div class="section-header">

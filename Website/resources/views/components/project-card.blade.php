@@ -19,14 +19,14 @@
 
 <div class="project-card group relative" data-accent="{{ $accent }}">
     <!-- Floating Star Button with Bootstrap Icon -->
-    <div class="absolute -top-3 -right-3 z-20">
-        <button class="like-button w-9 h-9 rounded-full bg-gray-900 border-2 border-gray-600 flex items-center justify-center shadow-xl transition-all duration-300 hover:scale-110 hover:border-yellow-400 transform hover:-translate-y-0.5 {{ $isLiked ? 'text-yellow-400 border-yellow-400' : 'text-gray-400 hover:text-yellow-300' }}" 
+    <div class="snap-action-buttons">
+        <button class="snap-action-btn favorite-btn like-button {{ $isLiked ? 'text-yellow-400' : 'text-gray-400' }}" 
                 data-project-slug="{{ $slug }}"
                 title="{{ $isLiked ? 'You liked this project' : 'Like this project' }}">
-            <i class="bi bi-star{{ $isLiked ? '-fill' : '' }} text-lg"></i>
+            <i class="bi {{ $isLiked ? 'bi-star-fill' : 'bi-star' }}"></i>
         </button>
-        <div class="absolute inset-0 rounded-full bg-yellow-400/20 blur-md -z-10"></div>
     </div>
+    <div class="absolute inset-0 rounded-full bg-yellow-400/20 blur-md -z-10"></div>
 
     @unless($hideImage)
     <div class="card-image-container overflow-hidden">
@@ -67,6 +67,50 @@
 
 @once
 <style>
+    .snap-action-buttons {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        display: flex;
+        gap: 10px;
+        z-index: 10;
+    }
+    
+    .snap-action-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(17, 24, 39, 0.8);
+        border: 2px solid rgba(156, 163, 175, 0.3);
+        backdrop-filter: blur(4px);
+        transition: all 0.2s ease;
+        cursor: pointer;
+        outline: none;
+        padding: 0;
+    }
+    
+    .snap-action-btn:hover {
+        transform: scale(1.1);
+        border-color: rgba(251, 191, 36, 0.7);
+        background-color: rgba(31, 41, 55, 0.9);
+    }
+    
+    .snap-action-btn i {
+        font-size: 1.1rem;
+        transition: transform 0.2s ease;
+    }
+    
+    .snap-action-btn:hover i {
+        transform: scale(1.1);
+    }
+    
+    .snap-action-btn:active {
+        transform: scale(0.95);
+    }
+    
     .project-card {
         background-color: var(--card-bg);
         width: 100%;
