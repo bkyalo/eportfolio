@@ -48,6 +48,25 @@ class ContactPageController extends Controller
             'is_read' => false,
         ]);
 
+        // Send email notification
+        try {
+            $adminEmail = env('MAIL_FROM_ADDRESS', 'your-email@example.com');
+            \Mail::to($adminEmail)->send(
+                new \App\Mail\ContactFormSubmitted(
+                    $validated['name'],
+                    $validated['email'],
+                    $validated['phone'] ?? null,
+                    $validated['subject'],
+                    $validated['message'],
+                    $submission->id // Pass the submission ID to the Mailable
+                )
+            );
+            \Log::info('Contact form email sent successfully to: ' . $adminEmail);
+        } catch (\Exception $e) {
+            \Log::error('Failed to send contact form email: ' . $e->getMessage());
+            // Continue with the request even if email fails
+        }
+
         // Send email notification (optional)
         try {
             // Mail::to('your-email@example.com')->send(new ContactFormSubmitted($submission));
