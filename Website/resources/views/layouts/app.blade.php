@@ -3,8 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Ben Tito')</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>@yield('title', config('app.name', 'My Portfolio'))</title>
+    <meta name="title" content="@yield('meta_title', config('app.name', 'My Portfolio'))">
+    <meta name="description" content="@yield('meta_description', 'A professional portfolio showcasing my work and skills')">
+    <meta name="keywords" content="@yield('meta_keywords', 'portfolio, web development, design, projects')">
+    <meta name="author" content="{{ config('app.name', 'My Portfolio') }}">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('meta_title', config('app.name', 'My Portfolio'))">
+    <meta property="og:description" content="@yield('meta_description', 'A professional portfolio showcasing my work and skills')">
+    <meta property="og:image" content="@yield('meta_image', asset('images/og-image.jpg'))">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url()->current() }}">
+    <meta property="twitter:title" content="@yield('meta_title', config('app.name', 'My Portfolio'))">
+    <meta property="twitter:description" content="@yield('meta_description', 'A professional portfolio showcasing my work and skills')">
+    <meta property="twitter:image" content="@yield('meta_image', asset('images/og-image.jpg'))">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +37,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
+    {{-- Favicon --}}
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+    <link rel="mask-icon" href="{{ asset('safari-pinned-tab.svg') }}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    
     {{-- Link to your compiled CSS file --}}
     {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
     
