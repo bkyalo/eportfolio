@@ -739,6 +739,14 @@ a:hover {
 @media (max-width: 768px) {
     .about-content {
         grid-template-columns: 1fr;
+        text-align: left;
+    }
+    .about-text {
+        text-align: left;
+    }
+    .about-image {
+        margin: 0 auto;
+        text-align: center;
     }
     .header-nav {
         display: none; /* Example: hide for a mobile menu */
