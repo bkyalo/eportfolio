@@ -5,7 +5,7 @@
         <a href="{{ route('home') }}#works">#projects</a>
         <a href="{{ route('home') }}#skills">#skills</a>
         <a href="{{ route('about') }}" class="{{ request()->is('about') ? 'active' : '' }}">#about-me</a>
-        <a href="{{ route('contact') }}">#contacts</a>
-        <span class="lang-switcher">EN</span>
+        <a href="{{ route('contact') }}" class="{{ request()->is('contact') ? 'active' : '' }}">#contacts</a>
+        {{-- <span class="lang-switcher">EN</span> --}}
     </nav>
 </header>
