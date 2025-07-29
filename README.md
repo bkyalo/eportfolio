@@ -1,97 +1,97 @@
-Here’s a cleaned and well-structured **`README.md`** file based on your HTML snippet:
+# EPORTFOLIO
 
-````markdown
-# EPORTFOLIO  
 *Showcase Your Brilliance, Inspire the World*
 
-![last-commit](https://img.shields.io/github/last-commit/bkyalo/eportfolio?style=flat&logo=git&logoColor=white&color=0080ff)
-![repo-top-language](https://img.shields.io/github/languages/top/bkyalo/eportfolio?style=flat&color=0080ff)
-![repo-language-count](https://img.shields.io/github/languages/count/bkyalo/eportfolio?style=flat&color=0080ff)
+![Last Commit](https://img.shields.io/github/last-commit/bkyalo/eportfolio?style=flat\&logo=git\&logoColor=white\&color=0080ff)
+![Top Language](https://img.shields.io/github/languages/top/bkyalo/eportfolio?style=flat\&color=0080ff)
+![Language Count](https://img.shields.io/github/languages/count/bkyalo/eportfolio?style=flat\&color=0080ff)
 
-**Built with the following tools and technologies:**  
-![JSON](https://img.shields.io/badge/JSON-000000.svg?style=flat&logo=JSON&logoColor=white)
-![Markdown](https://img.shields.io/badge/Markdown-000000.svg?style=flat&logo=Markdown&logoColor=white)
-![Composer](https://img.shields.io/badge/Composer-885630.svg?style=flat&logo=Composer&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat&logo=JavaScript&logoColor=black)
-![XML](https://img.shields.io/badge/XML-005FAD.svg?style=flat&logo=XML&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB.svg?style=flat&logo=Python&logoColor=white)
-![PHP](https://img.shields.io/badge/PHP-777BB4.svg?style=flat&logo=PHP&logoColor=white)
+### Built With
+
+![JSON](https://img.shields.io/badge/JSON-000000.svg?style=flat\&logo=JSON\&logoColor=white)
+![Markdown](https://img.shields.io/badge/Markdown-000000.svg?style=flat\&logo=Markdown\&logoColor=white)
+![Composer](https://img.shields.io/badge/Composer-885630.svg?style=flat\&logo=Composer\&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat\&logo=JavaScript\&logoColor=black)
+![XML](https://img.shields.io/badge/XML-005FAD.svg?style=flat\&logo=XML\&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB.svg?style=flat\&logo=Python\&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-777BB4.svg?style=flat\&logo=PHP\&logoColor=white)
 
 ---
 
 ## Table of Contents
-- [Overview](#overview)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Testing](#testing)
+
+* [Overview](#overview)
+* [Getting Started](#getting-started)
+
+  * [Prerequisites](#prerequisites)
+  * [Installation](#installation)
+  * [Usage](#usage)
+  * [Testing](#testing)
 
 ---
 
 ## Overview
-Eportfolio is a personal or institutional portfolio platform designed to **showcase work, achievements, and skills**.  
-It can be used by students, professionals, and organizations to present projects, CVs, and digital credentials in a clean and customizable way.
+
+Eportfolio is a personal portfolio management system designed to showcase your skills, achievements, and projects in a professional, dynamic, and easily customizable format.
+
+Whether you're a developer, designer, or creative professional, this tool helps you build an impressive online portfolio with minimal setup.
 
 ---
 
 ## Getting Started
 
 ### Prerequisites
-This project requires:
-- **Programming Language:** PHP (8.1 or later recommended)
-- **Package Manager:** [Composer](https://getcomposer.org)
+
+Before you begin, ensure you have the following installed:
+
+* **Programming Language:** [PHP](https://www.php.net/)
+* **Package Manager:** [Composer](https://getcomposer.org/)
+
+---
 
 ### Installation
-To build and run `Eportfolio` from source:
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/bkyalo/eportfolio
-````
+Clone and set up the project locally:
 
-2. **Navigate to the project directory:**
+```sh
+# Clone the repository
+git clone https://github.com/bkyalo/eportfolio
 
-   ```bash
-   cd eportfolio
-   ```
+# Navigate to the project directory
+cd eportfolio
 
-3. **Install the dependencies (via Composer):**
+# Install dependencies
+composer install
+```
 
-   ```bash
-   composer install
-   ```
+---
 
 ### Usage
 
-Run the project using:
+Run the project locally using PHP's built-in server:
 
-```bash
-php {entrypoint}
+```sh
+php artisan serve
 ```
 
-> Replace `{entrypoint}` with the main PHP file (e.g., `artisan serve` or `index.php`, depending on setup).
+*(Replace with the correct entry point if different, e.g., `php public/index.php`)*
+
+Access the app via:
+
+```
+http://localhost:8000
+```
+
+---
 
 ### Testing
 
-Eportfolio uses **{test\_framework}** (e.g., PHPUnit).
-Run the test suite with:
+Eportfolio uses **PHPUnit** for testing. Run the test suite with:
 
-```bash
+```sh
 vendor/bin/phpunit
 ```
 
 ---
 
 [⬆ Return to Top](#eportfolio)
-
-```
-
----
-
-Would you like me to:
-
-1. **Fill in placeholders** (`{entrypoint}` and `{test_framework}`) assuming it’s a **Laravel app**?  
-2. Or **keep it generic** so the file works for any PHP project?  
-3. Or **make two versions** (generic + Laravel-specific)? Which one do you prefer?
-```
